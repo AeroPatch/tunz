@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>Dokumenty do 艣wiadczenia</title>
+<title>Dokumenty do świadczenia</title>
 <link rel="icon" type="image/png" href="list.png">
 <style>
 :root {
@@ -12,6 +12,7 @@
     --white: #ffffff;
     --shadow: 0 8px 20px rgba(0,0,0,0.1);
     --gradient: linear-gradient(to right, #2d5c8a, #0a2540);
+    --accent: #2d5c8a;
 }
 
 * { box-sizing: border-box; }
@@ -130,168 +131,149 @@ select:focus {
 @media (max-width: 768px) {
     .container { flex-direction: column; gap: 20px; }
 }
+
+/* --- Stopka --- */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 0.9rem;
+  color: var(--primary);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+}
+
+footer a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 6px;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
 </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- 馃敼 LEWY PANEL: formularz dokument贸w -->
+    <!-- LEWY PANEL: formularz dokumentów -->
     <div class="left-panel">
-        <h2>Dokumenty wymagane do zg艂oszenia 艣wiadczenia</h2>
+        <h2>Dokumenty wymagane do zgłoszenia świadczenia</h2>
 
-        <label for="mainCategory">Wybierz kategori臋 g艂贸wn膮:</label>
+        <label for="mainCategory">Wybierz kategorię główną:</label>
         <select id="mainCategory">
-            <option value="">-- Wybierz kategori臋 --</option>
+            <option value="">-- Wybierz kategorię --</option>
         </select>
 
-        <label for="subCategory" id="subCategoryLabel" class="hidden">Wybierz podkategori臋:</label>
+        <label for="subCategory" id="subCategoryLabel" class="hidden">Wybierz podkategorię:</label>
         <select id="subCategory" class="hidden">
-            <option value="">-- Wybierz podkategori臋 --</option>
+            <option value="">-- Wybierz podkategorię --</option>
         </select>
 
         <div id="documentsContainer" class="hidden">
             <h3>Wymagane dokumenty:</h3>
             <ul id="documentsList"></ul>
-            <h4>Dokumenty nale偶y przes艂a膰 na adres TUn呕 Warta S.A. Skrytka Pocztowa nr 1013, 00-950 Warszawa 1</h4>
+            <h4>Dokumenty należy przesłać na adres TUn Warta S.A., Skrytka Pocztowa nr 1013, 00-950 Warszawa 1</h4>
         </div>
     </div>
 
-<!-- 馃敼 PRAWY PANEL: sta艂a notatka -->
-<div class="right-panel">
-    <h2>Spos贸b zg艂oszenia</h2>
-    <div class="submission-note">
-        <strong>Spos贸b 1:</strong> Wejd藕 na stron臋 warta.pl >> Zg艂o艣 szkod臋 - tr贸jk膮t z wykrzyknikiem >> Wybierz 4 kafelek - Osoba >> Kliknij w 1 kafelek - 艢wiadczenia z polisy na 偶ycie >> Wype艂nij formularz<br><br>
-        <strong>Spos贸b 2:</strong> Prze艂膮czenie do odpowiedniego dzia艂u, kt贸ry zajmuje si臋 przyjowaniem zg艂osze艅<br><br>
-        <strong>Spos贸b 3:</strong> Korespondencyjnie na adres: TUn呕 Warta S.A. Skrytka Pocztowa nr 1013, 00-950 Warszawa 1
+    <!-- PRAWY PANEL: stała notatka -->
+    <div class="right-panel">
+        <h2>Sposób zgłoszenia</h2>
+        <div class="submission-note">
+            <strong>Sposób 1:</strong> Wejdź na stronę warta.pl >> Zgłoś szkodę - trójkąt z wykrzyknikiem >> Wybierz kafelek "Osoba" >> Kliknij kafelek "Świadczenia z polisy na życie" >> Wypełnij formularz.<br><br>
+            <strong>Sposób 2:</strong> Przełączenie do odpowiedniego działu, który zajmuje się przyjmowaniem zgłoszeń.<br><br>
+            <strong>Sposób 3:</strong> Korespondencyjnie na adres: TUn Warta S.A., Skrytka Pocztowa nr 1013, 00-950 Warszawa 1.
+        </div>
     </div>
 </div>
 
+<footer>
+    © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
+    <a href="support.html">Wesprzyj projekt</a>
+</footer>
 
 <script>
+
 const data = {
   "URODZENIE": {
-    "URODZENIE DZIECKA": ["Odpis skr贸cony aktu urodzenia", "Kopia dokumentu to偶samo艣ci osoby uprawnionej"],
-    "URODZENIE DZIECKA Z NISK膭 SKAL膭 APGAR": ["Odpis skr贸cony aktu urodzenia", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument medyczny potwierdzaj膮cy skal臋 Apgar"],
-    "URODZENIE DZIECKA Z WAD膭 WRODZON膭": ["Odpis skr贸cony aktu urodzenia", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokumentacja medyczna potwierdzaj膮ca wad臋 wrodzon膮 dziecka"],
-    "URODZENIE MARTWEGO DZIECKA": ["Odpis skr贸cony aktu urodzenia lub aktu zgonu z adnotacj膮 urz臋dow膮: (dziecko martwo urodzone)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej"],
-    "URODZENIE WNUKA": ["Odpis skr贸cony aktu urodzenia wnuka", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument potwierdzaj膮cy pokrewie艅stwo pomi臋dzy rodzicem dziecka, a ubezpieczonym"]
-  },
-  "艢MIER膯": {
-    "艢MIER膯 UBEZPIECZONEGO": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument potwierdzaj膮cy przyczyn臋 i okoliczno艣ci zgonu ubezpieczonego (np. karta zgonu, dokumentacja medyczna, wynik sekcji zw艂ok, dokumenty z policji/prokuratury)"],
-    "艢MIER膯 MA艁呕ONKA/PARTNERA": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument potwierdzaj膮cy przyczyn臋 i okoliczno艣ci zgonu (np. karta zgonu, dokumentacja medyczna, wynik sekcji zw艂ok, dokumenty z policji/prokuratury)"],
-    "艢MIER膯 DZIECKA": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokumenty, z kt贸rych wynikaj膮 okoliczno艣ci i przyczyna zgonu (np. karta zgonu, dokumentacja lekarska, wynik sekcji zw艂ok )"],
-    "艢MIER膯 RODZIC脫W UBEZPIECZONEGO": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument potwierdzaj膮cy pokrewie艅stwo np.: akt urodzenia/ma艂偶e艅stwa z danymi rodzica", "Je艣li zdarzenie dotyczy zgonu ojczyma lub macochy konieczny jest odpis skr贸cony aktu zgonu biologicznego rodzica ubezpieczonego"],
-    "艢MIER膯 RODZIC脫W MA艁呕ONKA/PARTNERA": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument wskazuj膮cy powinowactwo ubezpieczonego/ma艂偶onka/partnera z osob膮 zmar艂膮", "Je艣li zdarzenie dotyczy zgonu ojczyma lub macochy konieczny jest odpis skr贸cony aktu zgonu biologicznego rodzica ma艂偶onka/partnera"],
-    "OSIEROCENIE DZIECKA PO 艢MIERCI UBEZPIECZONEGO": ["Odpis skr贸cony aktu zgonu ubezpieczonego", "Skr贸cony odpis aktu urodzenia dziecka", "Kopia dokumentu to偶samo艣ci osoby uprawnionej (pe艂noletniego dziecka lub opiekuna prawnego niepe艂noletniego dziecka)", "Dokument potwierdzaj膮cy przyczyn臋 i okoliczno艣ci zgonu (np. karta zgonu, dokumentacja medyczna, wynik sekcji zw艂ok, dokumenty z policji/prokuratury)", "Dane kontaktowe opiekuna prawnego w przypadku niepe艂noletniego dziecka", "Dodatkowe dokumenty/informacje 鈥?w zale偶no艣ci od okoliczno艣ci i zapis贸w OWU:", "Za艣wiadczenie o ucz臋szczaniu do szko艂y/pobieraniu nauki, je偶eli dziecko jest w wieku od 18 do 25 roku 偶ycia", "O艣wiadczenie dziecka w wieku 18-25 lat, ucz臋szczaj膮cego do szko艂y o nie podejmowaniu pracy zarobkowej", "Orzeczenie s膮du ustanawiaj膮ce prawnego opiekuna nieletniego dziecka w przypadku pozbawienia w艂adzy rodzicielskiej lub gdy rodzice nie 偶yj膮", "Za艣wiadczenie o trwa艂ej niezdolno艣ci do pracy", "Orzeczenie s膮du stwierdzaj膮ce fakt przysposobienia dziecka przez zmar艂ego ubezpieczonego", "Dokument potwierdzaj膮cy zmian臋 nazwiska dziecka np. skr贸cony odpis aktu ma艂偶e艅stwa"],
-    "艢MIER膯 NOWORODKA": ["Odpis skr贸cony aktu zgonu lub odpis skr贸cony aktu urodzenia z adnotacj膮 urz臋dow膮: 鈥瀌ziecko martwo urodzone鈥?鈥?w przypadku noworodka pocz臋tego lecz nienarodzonego", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokumenty, z kt贸rych wynikaj膮 okoliczno艣ci i przyczyna zgonu noworodka (np. karta zgonu, dokumentacja lekarska, wynik sekcji zw艂ok, dokumenty z prokuratury) 鈥?w przypadku noworodka, kt贸ry przyszed艂 na 艣wiat 偶ywy i nie uko艅czy艂 1 roku 偶ycia", "Dodatkowe dokumenty/informacje 鈥?w zale偶no艣ci od zapis贸w OWU:", "Za艣wiadczenie lekarskie lub inny dokument zawieraj膮cy informacje, w kt贸rym tygodniu ci膮偶y nast膮pi艂 zgon noworodka 鈥?w przypadku noworodka pocz臋tego lecz nienarodzonego"]
-  },
-  "INWALIDZTWO": {
-    "INWALIDZTWO CA艁KOWITE LUB CZ臉艢CIOWE": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce ca艂kowite lub cz臋艣ciowe inwalidztwo", "Dokumentacja medyczna z przebiegu leczenia", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"]
-  },
-  "NIEZDOLNO艢膯": {
-    "NIEZDOLNO艢膯 DO PRACY TRWA艁A CA艁KOWITA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce niezdolno艣膰 do pracy", "Pe艂na dokumentacja medyczna okre艣laj膮ca pow贸d powstania niezdolno艣ci do pracy", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"],
-    "NIEZDOLNO艢膯 DO PRACY OKRESOWA CZASOWA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce niezdolno艣膰 do pracy", "Pe艂na dokumentacja medyczna okre艣laj膮ca pow贸d powstania niezdolno艣ci do pracy", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"],
-    "NIEZDOLNO艢膯 DO PRACY W ZAWODZIE KIEROWCY LUB NAUCZYCIELA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce niezdolno艣膰 do pracy", "Orzeczenie lekarza stwierdzaj膮cego konieczno艣膰 powstrzymania si臋 Ubezpieczonego od pracy w celu przeprowadzenia zaleconego leczenia (odbycia urlopu dla poratowania zdrowia), wraz z dokumentacj膮 medyczn膮, kt贸ra by艂a podstaw膮 do wydania tego orzeczenia", "Dokumentacja medyczna potwierdzaj膮ca przyczyn臋 niezdolno艣ci do pracy", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"],
-    "NIEZDOLNO艢膯 DO SAMODZIELNEJ EGZYSTENCJI": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce niezdolno艣膰 do samodzielnej egzystencji", "Dokumentacja medyczna potwierdzaj膮ca niezdolno艣膰 do samodzielnej egzystencji", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"]
-  },
-  "ZDARZENIA ZDROWOTNE": {
-    "POBYT W SZPITALU": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
-    "OPERACJA": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
-    "LECZENIE SPECJALISTYCZNE": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
-    "LECZENIE SPECJALISTYCZNE ONKOLOGICZNE": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
-    "LECZENIE SPECJALISTYCZNE KARDIOLOGICZNE": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
-    "艢WIADCZENIE REHABILITACYJNE": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"]
+    "URODZENIE DZIECKA": ["Odpis skrócony aktu urodzenia", "Kopia dokumentu tożsamości osoby uprawnionej"],
+    "URODZENIE DZIECKA Z NISKĄ SKALĄ APGAR": ["Odpis skrócony aktu urodzenia", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokument medyczny potwierdzający skalę Apgar"],
+    "URODZENIE DZIECKA Z WADĄ WRODZONĄ": ["Odpis skrócony aktu urodzenia", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokumentacja medyczna potwierdzająca wady wrodzone dziecka"],
+    "URODZENIE MARTWEGO DZIECKA": ["Odpis skrócony aktu urodzenia lub aktu zgonu z adnotacją urzędową: (dziecko martwo urodzone)", "Kopia dokumentu tożsamości osoby uprawnionej"],
+    "URODZENIE WNUKA": ["Odpis skrócony aktu urodzenia wnuka", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokument potwierdzający pokrewieństwo pomiędzy rodzicem dziecka a ubezpieczonym"]
   },
 
-  "WYKUP LUB DO呕YCIE": {
-    "WYKUP UBEZPIECZENIA CA艁KOWITY": [
-      "Wype艂niony i podpisany Wniosek o wykup i do偶ycie",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej"
+  "ŚMIERĆ": {
+    "ŚMIERĆ UBEZPIECZONEGO": ["Odpis skrócony aktu zgonu", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokument potwierdzający przyczynę i okoliczności zgonu (np. karta zgonu, dokumentacja medyczna, wynik sekcji zwłok, dokumenty z policji/prokuratury)"],
+    "ŚMIERĆ MAŁŻONKA/PARTNERA": ["Odpis skrócony aktu zgonu", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokument potwierdzający przyczynę i okoliczności zgonu"],
+    "ŚMIERĆ DZIECKA": ["Odpis skrócony aktu zgonu", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokumenty określające okoliczności i przyczynę zgonu dziecka"],
+    "ŚMIERĆ RODZICÓW UBEZPIECZONEGO": ["Odpis skrócony aktu zgonu", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokument potwierdzający pokrewieństwo, np. akt urodzenia/małżeństwa"],
+    "ŚMIERĆ RODZICÓW MAŁŻONKA/PARTNERA": ["Odpis skrócony aktu zgonu", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokument potwierdzający pokrewieństwo"],
+    "OSIEROCE DZIECKA PO ŚMIERCI UBEZPIECZONEGO": [
+      "Odpis skrócony aktu zgonu ubezpieczonego",
+      "Skrócony odpis aktu urodzenia dziecka",
+      "Kopia dokumentu tożsamości osoby uprawnionej",
+      "Dokument potwierdzający przyczynę i okoliczności zgonu",
+      "Dane kontaktowe opiekuna prawnego w przypadku niepełnoletniego dziecka",
+      "Dodatkowe dokumenty/informacje w zależności od okoliczności i zapisów OWU",
+      "Zaświadczenie o uczęszczaniu do szkoły/pobieraniu nauki, jeśli dziecko ma 18-25 lat",
+      "Oświadczenie dziecka 18-25 lat o niepodejmowaniu pracy zarobkowej",
+      "Orzeczenie sądu ustanawiające prawnego opiekuna nieletniego dziecka w przypadku pozbawienia władzy rodzicielskiej lub gdy rodzice nie żyją",
+      "Zaświadczenie o trwałej niezdolności do pracy",
+      "Orzeczenie sądu stwierdzające przysposobienie dziecka przez zmarłego ubezpieczonego",
+      "Dokument potwierdzający zmianę nazwiska dziecka, np. skrócony odpis aktu małżeństwa"
     ],
-    "WYKUP UBEZPIECZENIA CZ臉艢CIOWY": [
-      "Wype艂niony i podpisany Wniosek o wykup i do偶ycie",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej"
-    ],
-    "DO呕YCIE DO KO艃CA OKRESU UBEZPIECZENIA": [
-      "Wype艂niony i podpisany Wniosek o wykup i do偶ycie",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej"
-    ]
+    "ŚMIERĆ NOWORODKA": ["Odpis skrócony aktu zgonu lub urodzenia z adnotacją urzędową: 'dziecko martwo urodzone'", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokumenty określające okoliczności i przyczynę zgonu noworodka", "Dodatkowe dokumenty w zależności od zapisów OWU", "Zaświadczenie lekarskie lub inny dokument zawierający informację o tygodniu ciąży w przypadku noworodka poczętego lecz nienarodzonego"]
+  },
+
+  "INWALIDZTWO": {
+    "INWALIDZTWO CAŁKOWITE LUB CZĘŚCIOWE": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzające całościowe lub częściowe inwalidztwo", "Dokumentacja medyczna z przebiegu leczenia", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienie lekarskie"]
+  },
+
+  "NIEZDOLNOŚĆ": {
+    "NIEZDOLNOŚĆ DO PRACY TRWAŁA CAŁKOWITA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS", "Pełna dokumentacja medyczna określająca powód niezdolności do pracy", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienie lekarskie"],
+    "NIEZDOLNOŚĆ DO PRACY OKRESOWA CZASOWA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS", "Pełna dokumentacja medyczna określająca powód niezdolności do pracy", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienie lekarskie"],
+    "NIEZDOLNOŚĆ DO PRACY W ZAWODZIE KIEROWCY LUB NAUCZYCIELA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS", "Orzeczenie lekarza stwierdzające konieczność powstrzymania się od pracy", "Dokumentacja medyczna potwierdzająca przyczynę niezdolności do pracy", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienie lekarskie"],
+    "NIEZDOLNOŚĆ DO SAMODZIELNEJ EGZYSTENCJI": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS", "Dokumentacja medyczna potwierdzająca niezdolność do samodzielnej egzystencji", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienie lekarskie"]
+  },
+
+  "ZDARZENIA ZDROWOTNE": {
+    "POBYT W SZPITALU": ["Dokumentacja medyczna potwierdzająca pobyt w szpitalu (OIOM/OIOK/OIT), oddziale rehabilitacyjnym lub sanatorium", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienia lekarskie", "Skierowanie do sanatorium zatwierdzone przez uprawniony organ"],
+    "OPERACJA": ["Dokumentacja medyczna pobytu i operacji", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienia lekarskie", "Skierowanie do sanatorium zatwierdzone przez uprawniony organ"],
+    "LECZENIE SPECJALISTYCZNE": ["Dokumentacja medyczna pobytu i leczenia", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienia lekarskie", "Skierowanie do sanatorium zatwierdzone przez uprawniony organ"],
+    "LECZENIE SPECJALISTYCZNE ONKOLOGICZNE": ["Dokumentacja medyczna pobytu i leczenia onkologicznego", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienia lekarskie", "Skierowanie do sanatorium"],
+    "LECZENIE SPECJALISTYCZNE KARDIOLOGICZNE": ["Dokumentacja medyczna pobytu i leczenia kardiologicznego", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienia lekarskie", "Skierowanie do sanatorium"],
+    "ŚWIADCZENIE REHABILITACYJNE": ["Dokumentacja medyczna pobytu i leczenia rehabilitacyjnego", "Kopia dokumentu tożsamości osoby uprawnionej", "Zwolnienia lekarskie", "Skierowanie do sanatorium"]
+  },
+
+  "WYKUP LUB DOŁYCIE": {
+    "WYKUP UBEZPIECZENIA CAŁKOWITY": ["Wypełniony i podpisany wniosek o wykup i dołycie", "Kopia dokumentu tożsamości osoby uprawnionej"],
+    "WYKUP UBEZPIECZENIA CZĘŚCIOWY": ["Wypełniony i podpisany wniosek o wykup i dołycie", "Kopia dokumentu tożsamości osoby uprawnionej"],
+    "DOŁYCIE DO KOŃCA OKRESU UBEZPIECZENIA": ["Wypełniony i podpisany wniosek o wykup i dołycie", "Kopia dokumentu tożsamości osoby uprawnionej"]
   },
 
   "ZDARZENIA WYPADKOWE": {
-    "TRWA艁Y USZCZERBEK NA ZDROWIU WSKUTEK NIESZCZ臉艢LIWEGO WYPADKU": [
-      "Dokument z udzielenia pierwszej pomocy lekarskiej zaraz po wypadku z rozpoznaniem urazu (np. karta informacyjna z pogotowia ratunkowego, dokumentacja medyczna z SOR, szpitala lub przychodni)",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
-      "Dokumentacja medyczna z przebiegu leczenia",
-      "Protok贸艂 policji, prokuratury, protok贸艂 wypadku przy pracy (BHP lub w przypadku rolnik贸w protok贸艂 powypadkowy sporz膮dzony przez KRUS) lub informacja gdzie prowadzone by艂o post臋powanie",
-      "Je艣li wypadek powsta艂 w trakcie prowadzenia pojazdu przez poszkodowanego, prosimy o przes艂anie prawa jazdy",
-      "Je艣li do wypadku dosz艂o z powodu niesprawno艣ci pojazdu, prosimy o dokument dopuszczaj膮cy pojazd do ruchu np. dow贸d rejestracyjny pojazdu z wpisem badania technicznego"
-    ],
-    "LECZENIE SZPITALNE W ZWI膭ZKU Z NIESZCZ臉艢LIWYM WYPADKIEM": [
-      "Dokument z udzielenia pierwszej pomocy lekarskiej zaraz po wypadku z rozpoznaniem urazu",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
-      "Dokumentacja medyczna z przebiegu leczenia",
-      "Protok贸艂 policji, prokuratury, protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
-      "Je艣li wypadek powsta艂 w trakcie prowadzenia pojazdu przez poszkodowanego, prosimy o przes艂anie prawa jazdy",
-      "Je艣li do wypadku dosz艂o z powodu niesprawno艣ci pojazdu, prosimy o dokument dopuszczaj膮cy pojazd do ruchu"
-    ],
-    "ZDARZENIA ZWI膭ZANE Z WYPADKIEM PRZY PRACY": [
-      "Dokument z udzielenia pierwszej pomocy lekarskiej",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
-      "Dokumentacja medyczna z przebiegu leczenia",
-      "Protok贸艂 BHP, protok贸艂 powypadkowy lub informacja, gdzie prowadzone by艂o post臋powanie",
-      "Je艣li wypadek powsta艂 w trakcie prowadzenia pojazdu 鈥?prawo jazdy",
-      "Je艣li do wypadku dosz艂o z powodu niesprawno艣ci pojazdu 鈥?dokument dopuszczaj膮cy pojazd do ruchu"
-    ],
-    "ZDARZENIA ZWI膭ZANE Z WYPADKIEM W TRAKCIE PROWADZENIA POJAZDU": [
-      "Dokument z udzielenia pierwszej pomocy lekarskiej",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
-      "Dokumentacja medyczna z przebiegu leczenia",
-      "Protok贸艂 policji, protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
-      "Prawo jazdy w przypadku wypadku podczas prowadzenia pojazdu",
-      "Dokument dopuszczaj膮cy pojazd do ruchu, je艣li wypadek spowodowany by艂 niesprawno艣ci膮 pojazdu"
-    ]
+    "TRWAŁY USZCZERBEK NA ZDROWIU WSKUTEK NIESZCZĘŚLIWEGO WYPADKU": ["Dokument z udzielenia pierwszej pomocy lekarskiej", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokumentacja medyczna", "Protokół policji/prokuratury", "Prawo jazdy", "Dokument dopuszczający pojazd do ruchu"],
+    "LECZENIE SZPITALNE W ZWIĄZKU Z WYPADKIEM": ["Dokument z udzielenia pierwszej pomocy lekarskiej", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokumentacja medyczna", "Protokół policji/prokuratury", "Prawo jazdy", "Dokument dopuszczający pojazd do ruchu"],
+    "ZDARZENIA ZWIĄZANE Z WYPADKIEM PRZY PRACY": ["Dokument z udzielenia pierwszej pomocy", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokumentacja medyczna", "Protokół BHP/protokół powypadkowy", "Prawo jazdy", "Dokument dopuszczający pojazd do ruchu"],
+    "ZDARZENIA ZWIĄZANE Z WYPADKIEM W TRAKCIE PROWADZENIA POJAZDU": ["Dokument z udzielenia pierwszej pomocy", "Kopia dokumentu tożsamości osoby uprawnionej", "Dokumentacja medyczna", "Protokół policji/protokół wypadku", "Prawo jazdy", "Dokument dopuszczający pojazd do ruchu"]
   },
 
-  "ZDARZENIA DOTYCZ膭CE CZ艁ONKA RODZINY": {
-    "ZDARZENIA ZWI膭ZANE Z MA艁呕ONKIEM": [
-      "Dokument z udzielenia pierwszej pomocy lekarskiej z rozpoznaniem urazu",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
-      "Dokumentacja medyczna z przebiegu leczenia",
-      "Protok贸艂 policji/prokuratury/protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
-      "Je艣li wypadek podczas prowadzenia pojazdu 鈥?prawo jazdy",
-      "Je艣li wypadek spowodowany niesprawno艣ci膮 pojazdu 鈥?dokument dopuszczaj膮cy pojazd do ruchu",
-      "Dokumenty wskazuj膮ce pokrewie艅stwo: akt ma艂偶e艅stwa, akt urodzenia partnera, akt urodzenia dziecka"
-    ],
-    "ZDARZENIA ZWI膭ZANE Z PARTNEREM": [
-      "Dokument z udzielenia pierwszej pomocy lekarskiej z rozpoznaniem urazu",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
-      "Dokumentacja medyczna z przebiegu leczenia",
-      "Protok贸艂 policji/prokuratury/protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
-      "Prawo jazdy, je艣li wypadek podczas prowadzenia pojazdu",
-      "Dokument dopuszczaj膮cy pojazd do ruchu, je艣li wypadek spowodowany by艂 niesprawno艣ci膮 pojazdu",
-      "Dokumenty wskazuj膮ce pokrewie艅stwo: akt ma艂偶e艅stwa, akt urodzenia partnera, akt urodzenia dziecka"
-    ],
-    "ZDARZENIA ZWI膭ZANE Z DZIECKIEM": [
-      "Dokument z udzielenia pierwszej pomocy lekarskiej z rozpoznaniem urazu",
-      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
-      "Dokumentacja medyczna z przebiegu leczenia",
-      "Protok贸艂 policji/prokuratury/protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
-      "Prawo jazdy, je艣li wypadek podczas prowadzenia pojazdu",
-      "Dokument dopuszczaj膮cy pojazd do ruchu, je艣li wypadek spowodowany by艂 niesprawno艣ci膮 pojazdu",
-      "Dokumenty wskazuj膮ce pokrewie艅stwo: akt ma艂偶e艅stwa, akt urodzenia partnera, akt urodzenia dziecka"
-    ]
+  "ZDARZENIA DOTYCZĄCE CZŁONKA RODZINY": {
+    "ZDARZENIA ZWIĄZANE Z MAŁŻONKIEM": ["Dokumentacja medyczna", "Kopia dokumentu tożsamości osoby uprawnionej", "Protokół policji/prokuratury", "Prawo jazdy", "Dokument dopuszczający pojazd do ruchu", "Dokumenty wskazujące pokrewieństwo"],
+    "ZDARZENIA ZWIĄZANE Z PARTNEREM": ["Dokumentacja medyczna", "Kopia dokumentu tożsamości osoby uprawnionej", "Protokół policji/prokuratury", "Prawo jazdy", "Dokument dopuszczający pojazd do ruchu", "Dokumenty wskazujące pokrewieństwo"],
+    "ZDARZENIA ZWIĄZANE Z DZIECKIEM": ["Dokumentacja medyczna", "Kopia dokumentu tożsamości osoby uprawnionej", "Protokół policji/prokuratury", "Prawo jazdy", "Dokument dopuszczający pojazd do ruchu", "Dokumenty wskazujące pokrewieństwo"]
   },
 
   "ZDARZENIE W OKRESIE KARENCJI": {
-    "ZDARZENIA W OKRESIE KARENCJI": [
-      "Za艣wiadczenie o poprzednim ubezpieczeniu, wystawione przez poprzedniego ubezpieczaj膮cego lub poprzedniego ubezpieczyciela 鈥?w przypadku ubezpiecze艅 grupowych lub indywidualnych. Nie mo偶e by膰 wystawione przez ubezpieczonego lub agenta.",
-      "Dokumentacja polisowa dotycz膮ca poprzedniego ubezpieczenia (np. polisa, certyfikat) 鈥?nie mo偶e to by膰 oferta lub propozycja warunk贸w ubezpieczenia",
-      "Za艣wiadczenie lub dokumentacja polisowa powinny zawiera膰: okres ubezpieczenia, dat臋 wyst膮pienia z poprzedniego ubezpieczenia/rozwi膮zania umowy, nazw臋 poprzedniego ubezpieczyciela i ubezpieczaj膮cego, dane osoby ubezpieczonej, wskazane ryzyko ubezpieczeniowe, kwot臋 nale偶n膮 za zg艂oszone 艣wiadczenie z poprzedniej umowy"
-    ]
+    "ZDARZENIA W OKRESIE KARENCJI": ["Zaświadczenie o poprzednim ubezpieczeniu", "Dokumentacja polisowa poprzedniego ubezpieczenia", "Zaświadczenie lub dokumentacja polisowa zawierająca okres ubezpieczenia, datę wystąpienia, nazwę poprzedniego ubezpieczyciela, dane osoby ubezpieczonej, ryzyko ubezpieczeniowe, kwotę należną za zgłoszone świadczenie"]
   }
-
 };
+
 
 const mainCategory = document.getElementById('mainCategory');
 const subCategory = document.getElementById('subCategory');
@@ -317,7 +299,7 @@ mainCategory.addEventListener('change', () => {
 
     const subCats = Object.keys(data[selectedMain]);
     if (subCats.length > 0) {
-        subCategory.innerHTML = '<option value="">-- Wybierz podkategori臋 --</option>';
+        subCategory.innerHTML = '<option value="">-- Wybierz podkategorię --</option>';
         subCats.forEach(sub => {
             const option = document.createElement('option');
             option.value = sub;
