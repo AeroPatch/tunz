@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Dokumenty do 艣wiadczenia</title>
+<link rel="icon" type="image/png" href="list.png">
+<style>
+:root {
+    --bg: #f3f9ff;
+    --primary: #0a2540;
+    --secondary: #2d5c8a;
+    --white: #ffffff;
+    --shadow: 0 8px 20px rgba(0,0,0,0.1);
+    --gradient: linear-gradient(to right, #2d5c8a, #0a2540);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--primary);
+}
+
+.container {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    flex-wrap: wrap;
+}
+
+.left-panel, .right-panel {
+    flex: 1;
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+h2, h3 {
+    margin-top: 0;
+    color: var(--primary);
+}
+
+h2 { text-align: center; margin-bottom: 25px; }
+h3 { font-size: 1.3rem; margin-bottom: 15px; color: var(--secondary); }
+
+label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: var(--primary);
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1.5px solid #ccc;
+    margin-bottom: 18px;
+    cursor: pointer;
+    background: #fff;
+    transition: 0.2s;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 10px rgba(45,92,138,0.2);
+}
+
+#documentsContainer {
+    margin-top: 20px;
+    background: #e8f0ff;
+    padding: 18px 22px;
+    border-radius: 10px;
+    border: 1px solid #c1d3f0;
+}
+
+#documentsContainer ul {
+    margin: 12px 0 15px 20px;
+    line-height: 1.5;
+    font-size: 0.97rem;
+}
+
+#documentsContainer li { margin-bottom: 6px; }
+
+#documentsContainer h4 {
+    font-weight: 500;
+    font-size: 0.87rem;
+    color: #555;
+    margin: 0;
+    border-top: 1px solid #c1d3f0;
+    padding-top: 10px;
+    font-style: italic;
+}
+
+.copy-btn {
+    background: var(--gradient);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+    margin-top: 5px;
+}
+
+.submission-note {
+    background: #f3f9ff;
+    border: 2px solid #0a2540;
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.hidden { display: none; }
+
+@media (max-width: 768px) {
+    .container { flex-direction: column; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 馃敼 LEWY PANEL: formularz dokument贸w -->
+    <div class="left-panel">
+        <h2>Dokumenty wymagane do zg艂oszenia 艣wiadczenia</h2>
+
+        <label for="mainCategory">Wybierz kategori臋 g艂贸wn膮:</label>
+        <select id="mainCategory">
+            <option value="">-- Wybierz kategori臋 --</option>
+        </select>
+
+        <label for="subCategory" id="subCategoryLabel" class="hidden">Wybierz podkategori臋:</label>
+        <select id="subCategory" class="hidden">
+            <option value="">-- Wybierz podkategori臋 --</option>
+        </select>
+
+        <div id="documentsContainer" class="hidden">
+            <h3>Wymagane dokumenty:</h3>
+            <ul id="documentsList"></ul>
+            <h4>Dokumenty nale偶y przes艂a膰 na adres TUn呕 Warta S.A. Skrytka Pocztowa nr 1013, 00-950 Warszawa 1</h4>
+        </div>
+    </div>
+
+<!-- 馃敼 PRAWY PANEL: sta艂a notatka -->
+<div class="right-panel">
+    <h2>Spos贸b zg艂oszenia</h2>
+    <div class="submission-note">
+        <strong>Spos贸b 1:</strong> Wejd藕 na stron臋 warta.pl >> Zg艂o艣 szkod臋 - tr贸jk膮t z wykrzyknikiem >> Wybierz 4 kafelek - Osoba >> Kliknij w 1 kafelek - 艢wiadczenia z polisy na 偶ycie >> Wype艂nij formularz<br><br>
+        <strong>Spos贸b 2:</strong> Prze艂膮czenie do odpowiedniego dzia艂u, kt贸ry zajmuje si臋 przyjowaniem zg艂osze艅<br><br>
+        <strong>Spos贸b 3:</strong> Korespondencyjnie na adres: TUn呕 Warta S.A. Skrytka Pocztowa nr 1013, 00-950 Warszawa 1
+    </div>
+</div>
+
+
+<script>
+const data = {
+  "URODZENIE": {
+    "URODZENIE DZIECKA": ["Odpis skr贸cony aktu urodzenia", "Kopia dokumentu to偶samo艣ci osoby uprawnionej"],
+    "URODZENIE DZIECKA Z NISK膭 SKAL膭 APGAR": ["Odpis skr贸cony aktu urodzenia", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument medyczny potwierdzaj膮cy skal臋 Apgar"],
+    "URODZENIE DZIECKA Z WAD膭 WRODZON膭": ["Odpis skr贸cony aktu urodzenia", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokumentacja medyczna potwierdzaj膮ca wad臋 wrodzon膮 dziecka"],
+    "URODZENIE MARTWEGO DZIECKA": ["Odpis skr贸cony aktu urodzenia lub aktu zgonu z adnotacj膮 urz臋dow膮: (dziecko martwo urodzone)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej"],
+    "URODZENIE WNUKA": ["Odpis skr贸cony aktu urodzenia wnuka", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument potwierdzaj膮cy pokrewie艅stwo pomi臋dzy rodzicem dziecka, a ubezpieczonym"]
+  },
+  "艢MIER膯": {
+    "艢MIER膯 UBEZPIECZONEGO": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument potwierdzaj膮cy przyczyn臋 i okoliczno艣ci zgonu ubezpieczonego (np. karta zgonu, dokumentacja medyczna, wynik sekcji zw艂ok, dokumenty z policji/prokuratury)"],
+    "艢MIER膯 MA艁呕ONKA/PARTNERA": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument potwierdzaj膮cy przyczyn臋 i okoliczno艣ci zgonu (np. karta zgonu, dokumentacja medyczna, wynik sekcji zw艂ok, dokumenty z policji/prokuratury)"],
+    "艢MIER膯 DZIECKA": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokumenty, z kt贸rych wynikaj膮 okoliczno艣ci i przyczyna zgonu (np. karta zgonu, dokumentacja lekarska, wynik sekcji zw艂ok )"],
+    "艢MIER膯 RODZIC脫W UBEZPIECZONEGO": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument potwierdzaj膮cy pokrewie艅stwo np.: akt urodzenia/ma艂偶e艅stwa z danymi rodzica", "Je艣li zdarzenie dotyczy zgonu ojczyma lub macochy konieczny jest odpis skr贸cony aktu zgonu biologicznego rodzica ubezpieczonego"],
+    "艢MIER膯 RODZIC脫W MA艁呕ONKA/PARTNERA": ["Odpis skr贸cony aktu zgonu", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokument wskazuj膮cy powinowactwo ubezpieczonego/ma艂偶onka/partnera z osob膮 zmar艂膮", "Je艣li zdarzenie dotyczy zgonu ojczyma lub macochy konieczny jest odpis skr贸cony aktu zgonu biologicznego rodzica ma艂偶onka/partnera"],
+    "OSIEROCENIE DZIECKA PO 艢MIERCI UBEZPIECZONEGO": ["Odpis skr贸cony aktu zgonu ubezpieczonego", "Skr贸cony odpis aktu urodzenia dziecka", "Kopia dokumentu to偶samo艣ci osoby uprawnionej (pe艂noletniego dziecka lub opiekuna prawnego niepe艂noletniego dziecka)", "Dokument potwierdzaj膮cy przyczyn臋 i okoliczno艣ci zgonu (np. karta zgonu, dokumentacja medyczna, wynik sekcji zw艂ok, dokumenty z policji/prokuratury)", "Dane kontaktowe opiekuna prawnego w przypadku niepe艂noletniego dziecka", "Dodatkowe dokumenty/informacje 鈥?w zale偶no艣ci od okoliczno艣ci i zapis贸w OWU:", "Za艣wiadczenie o ucz臋szczaniu do szko艂y/pobieraniu nauki, je偶eli dziecko jest w wieku od 18 do 25 roku 偶ycia", "O艣wiadczenie dziecka w wieku 18-25 lat, ucz臋szczaj膮cego do szko艂y o nie podejmowaniu pracy zarobkowej", "Orzeczenie s膮du ustanawiaj膮ce prawnego opiekuna nieletniego dziecka w przypadku pozbawienia w艂adzy rodzicielskiej lub gdy rodzice nie 偶yj膮", "Za艣wiadczenie o trwa艂ej niezdolno艣ci do pracy", "Orzeczenie s膮du stwierdzaj膮ce fakt przysposobienia dziecka przez zmar艂ego ubezpieczonego", "Dokument potwierdzaj膮cy zmian臋 nazwiska dziecka np. skr贸cony odpis aktu ma艂偶e艅stwa"],
+    "艢MIER膯 NOWORODKA": ["Odpis skr贸cony aktu zgonu lub odpis skr贸cony aktu urodzenia z adnotacj膮 urz臋dow膮: 鈥瀌ziecko martwo urodzone鈥?鈥?w przypadku noworodka pocz臋tego lecz nienarodzonego", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Dokumenty, z kt贸rych wynikaj膮 okoliczno艣ci i przyczyna zgonu noworodka (np. karta zgonu, dokumentacja lekarska, wynik sekcji zw艂ok, dokumenty z prokuratury) 鈥?w przypadku noworodka, kt贸ry przyszed艂 na 艣wiat 偶ywy i nie uko艅czy艂 1 roku 偶ycia", "Dodatkowe dokumenty/informacje 鈥?w zale偶no艣ci od zapis贸w OWU:", "Za艣wiadczenie lekarskie lub inny dokument zawieraj膮cy informacje, w kt贸rym tygodniu ci膮偶y nast膮pi艂 zgon noworodka 鈥?w przypadku noworodka pocz臋tego lecz nienarodzonego"]
+  },
+  "INWALIDZTWO": {
+    "INWALIDZTWO CA艁KOWITE LUB CZ臉艢CIOWE": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce ca艂kowite lub cz臋艣ciowe inwalidztwo", "Dokumentacja medyczna z przebiegu leczenia", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"]
+  },
+  "NIEZDOLNO艢膯": {
+    "NIEZDOLNO艢膯 DO PRACY TRWA艁A CA艁KOWITA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce niezdolno艣膰 do pracy", "Pe艂na dokumentacja medyczna okre艣laj膮ca pow贸d powstania niezdolno艣ci do pracy", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"],
+    "NIEZDOLNO艢膯 DO PRACY OKRESOWA CZASOWA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce niezdolno艣膰 do pracy", "Pe艂na dokumentacja medyczna okre艣laj膮ca pow贸d powstania niezdolno艣ci do pracy", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"],
+    "NIEZDOLNO艢膯 DO PRACY W ZAWODZIE KIEROWCY LUB NAUCZYCIELA": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce niezdolno艣膰 do pracy", "Orzeczenie lekarza stwierdzaj膮cego konieczno艣膰 powstrzymania si臋 Ubezpieczonego od pracy w celu przeprowadzenia zaleconego leczenia (odbycia urlopu dla poratowania zdrowia), wraz z dokumentacj膮 medyczn膮, kt贸ra by艂a podstaw膮 do wydania tego orzeczenia", "Dokumentacja medyczna potwierdzaj膮ca przyczyn臋 niezdolno艣ci do pracy", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"],
+    "NIEZDOLNO艢膯 DO SAMODZIELNEJ EGZYSTENCJI": ["Dokument o przyznaniu renty lub orzeczenie lekarza/ZUS stwierdzaj膮ce niezdolno艣膰 do samodzielnej egzystencji", "Dokumentacja medyczna potwierdzaj膮ca niezdolno艣膰 do samodzielnej egzystencji", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienie lekarskie"]
+  },
+  "ZDARZENIA ZDROWOTNE": {
+    "POBYT W SZPITALU": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
+    "OPERACJA": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
+    "LECZENIE SPECJALISTYCZNE": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
+    "LECZENIE SPECJALISTYCZNE ONKOLOGICZNE": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
+    "LECZENIE SPECJALISTYCZNE KARDIOLOGICZNE": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"],
+    "艢WIADCZENIE REHABILITACYJNE": ["Dokumentacja medyczna, potwierdzaj膮ca: pobyt w szpitalu; na OIOM/OIOK/OIT; oddziale rehabilitacyjnym/w sanatorium (Szpitalu Uzdrowiskowym); okres pobytu oraz jego przyczyn臋; wykonan膮 operacj臋; powik艂ania operacji; leczenie specjalistyczne; zwolnienie lekarskie; skierowanie do sanatorium (je艣li zdarzenie wyst臋puje w polisie)", "Kopia dokumentu to偶samo艣ci osoby uprawnionej", "Zwolnienia lekarskie wydane przez szpital (je艣li zdarzenie wyst臋puje w polisie)", "Zatwierdzone przez uprawniony organ i wystawione przez uprawnionego lekarza skierowanie do sanatorium oraz dokument potwierdzaj膮cy pobyt (karta informacyjna, za艣wiadczenie) wystawiony przez sanatorium 鈥?dla zdarzenia pobytu w sanatorium (je艣li zdarzenie wyst臋puje w polisie)"]
+  },
+
+  "WYKUP LUB DO呕YCIE": {
+    "WYKUP UBEZPIECZENIA CA艁KOWITY": [
+      "Wype艂niony i podpisany Wniosek o wykup i do偶ycie",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej"
+    ],
+    "WYKUP UBEZPIECZENIA CZ臉艢CIOWY": [
+      "Wype艂niony i podpisany Wniosek o wykup i do偶ycie",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej"
+    ],
+    "DO呕YCIE DO KO艃CA OKRESU UBEZPIECZENIA": [
+      "Wype艂niony i podpisany Wniosek o wykup i do偶ycie",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej"
+    ]
+  },
+
+  "ZDARZENIA WYPADKOWE": {
+    "TRWA艁Y USZCZERBEK NA ZDROWIU WSKUTEK NIESZCZ臉艢LIWEGO WYPADKU": [
+      "Dokument z udzielenia pierwszej pomocy lekarskiej zaraz po wypadku z rozpoznaniem urazu (np. karta informacyjna z pogotowia ratunkowego, dokumentacja medyczna z SOR, szpitala lub przychodni)",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
+      "Dokumentacja medyczna z przebiegu leczenia",
+      "Protok贸艂 policji, prokuratury, protok贸艂 wypadku przy pracy (BHP lub w przypadku rolnik贸w protok贸艂 powypadkowy sporz膮dzony przez KRUS) lub informacja gdzie prowadzone by艂o post臋powanie",
+      "Je艣li wypadek powsta艂 w trakcie prowadzenia pojazdu przez poszkodowanego, prosimy o przes艂anie prawa jazdy",
+      "Je艣li do wypadku dosz艂o z powodu niesprawno艣ci pojazdu, prosimy o dokument dopuszczaj膮cy pojazd do ruchu np. dow贸d rejestracyjny pojazdu z wpisem badania technicznego"
+    ],
+    "LECZENIE SZPITALNE W ZWI膭ZKU Z NIESZCZ臉艢LIWYM WYPADKIEM": [
+      "Dokument z udzielenia pierwszej pomocy lekarskiej zaraz po wypadku z rozpoznaniem urazu",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
+      "Dokumentacja medyczna z przebiegu leczenia",
+      "Protok贸艂 policji, prokuratury, protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
+      "Je艣li wypadek powsta艂 w trakcie prowadzenia pojazdu przez poszkodowanego, prosimy o przes艂anie prawa jazdy",
+      "Je艣li do wypadku dosz艂o z powodu niesprawno艣ci pojazdu, prosimy o dokument dopuszczaj膮cy pojazd do ruchu"
+    ],
+    "ZDARZENIA ZWI膭ZANE Z WYPADKIEM PRZY PRACY": [
+      "Dokument z udzielenia pierwszej pomocy lekarskiej",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
+      "Dokumentacja medyczna z przebiegu leczenia",
+      "Protok贸艂 BHP, protok贸艂 powypadkowy lub informacja, gdzie prowadzone by艂o post臋powanie",
+      "Je艣li wypadek powsta艂 w trakcie prowadzenia pojazdu 鈥?prawo jazdy",
+      "Je艣li do wypadku dosz艂o z powodu niesprawno艣ci pojazdu 鈥?dokument dopuszczaj膮cy pojazd do ruchu"
+    ],
+    "ZDARZENIA ZWI膭ZANE Z WYPADKIEM W TRAKCIE PROWADZENIA POJAZDU": [
+      "Dokument z udzielenia pierwszej pomocy lekarskiej",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
+      "Dokumentacja medyczna z przebiegu leczenia",
+      "Protok贸艂 policji, protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
+      "Prawo jazdy w przypadku wypadku podczas prowadzenia pojazdu",
+      "Dokument dopuszczaj膮cy pojazd do ruchu, je艣li wypadek spowodowany by艂 niesprawno艣ci膮 pojazdu"
+    ]
+  },
+
+  "ZDARZENIA DOTYCZ膭CE CZ艁ONKA RODZINY": {
+    "ZDARZENIA ZWI膭ZANE Z MA艁呕ONKIEM": [
+      "Dokument z udzielenia pierwszej pomocy lekarskiej z rozpoznaniem urazu",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
+      "Dokumentacja medyczna z przebiegu leczenia",
+      "Protok贸艂 policji/prokuratury/protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
+      "Je艣li wypadek podczas prowadzenia pojazdu 鈥?prawo jazdy",
+      "Je艣li wypadek spowodowany niesprawno艣ci膮 pojazdu 鈥?dokument dopuszczaj膮cy pojazd do ruchu",
+      "Dokumenty wskazuj膮ce pokrewie艅stwo: akt ma艂偶e艅stwa, akt urodzenia partnera, akt urodzenia dziecka"
+    ],
+    "ZDARZENIA ZWI膭ZANE Z PARTNEREM": [
+      "Dokument z udzielenia pierwszej pomocy lekarskiej z rozpoznaniem urazu",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
+      "Dokumentacja medyczna z przebiegu leczenia",
+      "Protok贸艂 policji/prokuratury/protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
+      "Prawo jazdy, je艣li wypadek podczas prowadzenia pojazdu",
+      "Dokument dopuszczaj膮cy pojazd do ruchu, je艣li wypadek spowodowany by艂 niesprawno艣ci膮 pojazdu",
+      "Dokumenty wskazuj膮ce pokrewie艅stwo: akt ma艂偶e艅stwa, akt urodzenia partnera, akt urodzenia dziecka"
+    ],
+    "ZDARZENIA ZWI膭ZANE Z DZIECKIEM": [
+      "Dokument z udzielenia pierwszej pomocy lekarskiej z rozpoznaniem urazu",
+      "Kopia dokumentu to偶samo艣ci osoby uprawnionej",
+      "Dokumentacja medyczna z przebiegu leczenia",
+      "Protok贸艂 policji/prokuratury/protok贸艂 wypadku przy pracy lub informacja, gdzie prowadzone by艂o post臋powanie",
+      "Prawo jazdy, je艣li wypadek podczas prowadzenia pojazdu",
+      "Dokument dopuszczaj膮cy pojazd do ruchu, je艣li wypadek spowodowany by艂 niesprawno艣ci膮 pojazdu",
+      "Dokumenty wskazuj膮ce pokrewie艅stwo: akt ma艂偶e艅stwa, akt urodzenia partnera, akt urodzenia dziecka"
+    ]
+  },
+
+  "ZDARZENIE W OKRESIE KARENCJI": {
+    "ZDARZENIA W OKRESIE KARENCJI": [
+      "Za艣wiadczenie o poprzednim ubezpieczeniu, wystawione przez poprzedniego ubezpieczaj膮cego lub poprzedniego ubezpieczyciela 鈥?w przypadku ubezpiecze艅 grupowych lub indywidualnych. Nie mo偶e by膰 wystawione przez ubezpieczonego lub agenta.",
+      "Dokumentacja polisowa dotycz膮ca poprzedniego ubezpieczenia (np. polisa, certyfikat) 鈥?nie mo偶e to by膰 oferta lub propozycja warunk贸w ubezpieczenia",
+      "Za艣wiadczenie lub dokumentacja polisowa powinny zawiera膰: okres ubezpieczenia, dat臋 wyst膮pienia z poprzedniego ubezpieczenia/rozwi膮zania umowy, nazw臋 poprzedniego ubezpieczyciela i ubezpieczaj膮cego, dane osoby ubezpieczonej, wskazane ryzyko ubezpieczeniowe, kwot臋 nale偶n膮 za zg艂oszone 艣wiadczenie z poprzedniej umowy"
+    ]
+  }
+
+};
+
+const mainCategory = document.getElementById('mainCategory');
+const subCategory = document.getElementById('subCategory');
+const subCategoryLabel = document.getElementById('subCategoryLabel');
+const documentsContainer = document.getElementById('documentsContainer');
+const documentsList = document.getElementById('documentsList');
+
+Object.keys(data).forEach(cat => {
+    const option = document.createElement('option');
+    option.value = cat;
+    option.textContent = cat;
+    mainCategory.appendChild(option);
+});
+
+mainCategory.addEventListener('change', () => {
+    const selectedMain = mainCategory.value;
+    subCategory.classList.add('hidden');
+    subCategoryLabel.classList.add('hidden');
+    documentsContainer.classList.add('hidden');
+    documentsList.innerHTML = '';
+
+    if (!selectedMain) return;
+
+    const subCats = Object.keys(data[selectedMain]);
+    if (subCats.length > 0) {
+        subCategory.innerHTML = '<option value="">-- Wybierz podkategori臋 --</option>';
+        subCats.forEach(sub => {
+            const option = document.createElement('option');
+            option.value = sub;
+            option.textContent = sub;
+            subCategory.appendChild(option);
+        });
+        subCategory.classList.remove('hidden');
+        subCategoryLabel.classList.remove('hidden');
+    }
+});
+
+subCategory.addEventListener('change', () => {
+    const selectedMain = mainCategory.value;
+    const selectedSub = subCategory.value;
+    documentsList.innerHTML = '';
+    documentsContainer.classList.add('hidden');
+
+    if (!selectedSub) return;
+
+    const docs = data[selectedMain][selectedSub];
+    docs.forEach(doc => {
+        const li = document.createElement('li');
+        li.textContent = doc;
+        documentsList.appendChild(li);
+    });
+
+    documentsContainer.classList.remove('hidden');
+});
+</script>
+
+</body>
+</html>
