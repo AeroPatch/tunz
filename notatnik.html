@@ -30,7 +30,6 @@
       gap: 20px;
       width: 100%;
       max-width: 1200px;
-      min-height: 500px;
       align-items: flex-start;
     }
 
@@ -39,28 +38,22 @@
       background: var(--white);
       border-radius: 15px;
       box-shadow: var(--shadow);
-      padding: 20px;
+      padding: 15px 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
-    h2 {
-      text-align: center;
-      margin: 0 0 10px 0;
-    }
+    h2 { text-align: center; margin: 0 0 10px 0; }
 
     .field-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
+      gap: 8px;
+      margin-bottom: 8px;
     }
 
-    .field-row label {
-      font-weight: 600;
-      min-width: 160px;
-    }
+    .field-row label { font-weight: 600; min-width: 160px; }
 
     input, textarea, select {
       flex: 1;
@@ -77,14 +70,14 @@
       background: var(--gradient);
       color: #fff;
       border: none;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-radius: 6px;
       cursor: pointer;
       font-weight: 600;
       transition: 0.2s;
     }
 
-    .actions { display: flex; gap: 10px; margin-top: 10px; }
+    .actions { display: flex; gap: 8px; margin-top: 8px; }
 
     .actions button {
       flex: 1;
@@ -99,16 +92,17 @@
       transition: 0.3s;
     }
 
-    #summary {
-      flex: 1;
-      height: 200px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #f9f9f9;
-      font-family: monospace;
-      white-space: pre-wrap;
+    #summary { 
+      flex: 1; 
+      height: 200px; 
+      padding: 10px; 
+      border: 1px solid #ccc; 
+      border-radius: 8px; 
+      background: #f9f9f9; 
+      font-family: monospace; 
+      white-space: pre-wrap; 
       font-size: 0.9rem;
+      margin-top: 10px;
     }
 
     .verify-box {
@@ -143,6 +137,9 @@
     }
 
     .footer-container a:hover { text-decoration: underline; }
+
+    .clickable { color: var(--secondary); text-decoration: underline; cursor: pointer; font-weight: 600; }
+    .clickable:hover { text-decoration: none; }
   </style>
 </head>
 <body>
@@ -152,30 +149,49 @@
   <div class="left-panel">
     <h2>Notatka</h2>
 
-    <div class="field-row">
-      <label>Seria i numer polisy:</label>
-      <input type="text" id="polisa" oninput="checkVipPolisa()">
-      <button class="copy-btn" onclick="copyPolisa()">Kopiuj</button>
+    <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+      <div style="display:flex; align-items:center; width:100%; gap:8px;">
+        <label>
+          <span class="clickable" onclick="copySeries()">Seria</span> i 
+          <span class="clickable" onclick="copyNumber()">numer</span> polisy:
+        </label>
+        <input type="text" id="polisa" oninput="checkVipPolisa()" style="flex:1;">
+        <button class="copy-btn" onclick="copyPolisa()">Kopiuj</button>
+      </div>
+      <div id="vip-info" style="display:none;">To polisa VIP</div>
     </div>
 
     <div class="field-row">
-      <label>Imię i nazwisko:</label>
-      <input type="text" id="imie">
+      <label for="imie">Imię:</label>
+      <input id="imie" type="text">
       <button class="copy-btn" onclick="copyToClipboard('imie')">Kopiuj</button>
     </div>
 
     <div class="field-row">
-      <label>PESEL:</label>
-      <input type="text" id="pesel">
+      <label for="nazwisko">Nazwisko:</label>
+      <input id="nazwisko" type="text">
+      <button class="copy-btn" onclick="copyToClipboard('nazwisko')">Kopiuj</button>
+    </div>
+
+    <div class="field-row">
+      <label for="pesel">PESEL:</label>
+      <input id="pesel" type="text">
       <button class="copy-btn" onclick="copyToClipboard('pesel')">Kopiuj</button>
     </div>
 
-    <div class="field-row" style="flex-direction: column; align-items: flex-start;">
-      <label>Pozostałe notatki:</label>
-      <textarea id="notatki"></textarea>
-      <button class="copy-btn" style="height: 80px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
+    <div class="field-row">
+      <label for="zgloszenie">Numer zgłoszenia:</label>
+      <input id="zgloszenie" type="text">
+      <button class="copy-btn" onclick="copyToClipboard('zgloszenie')">Kopiuj</button>
     </div>
 
+    <div class="field-row" style="flex-direction:column; align-items:flex-start;">
+      <label for="notatki">Pozostałe notatki:</label>
+      <textarea id="notatki"></textarea>
+      <button class="copy-btn" style="height:80px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
+    </div>
+
+    <!-- Lista kategorii -->
     <div class="field-row">
       <label for="kategoria">Kategoria telefonu:</label>
       <select id="kategoria" onchange="updateVerification()">
@@ -210,7 +226,6 @@
   </div>
 </div>
 
-<!-- Stopka -->
 <div class="footer-container">
   © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
   <a href="support.html">Wesprzyj projekt</a>
@@ -250,36 +265,38 @@
     if (!/^[A-Z]{2}/.test(cleaned)) return cleaned;
     const prefix = cleaned.match(/[A-Z]+/)?.[0] || '';
     const digits = cleaned.match(/\d+/)?.[0] || '';
-    const normalizedNumber = digits ? String(parseInt(digits, 10)).padStart(7, '0') : '';
-    return prefix + normalizedNumber;
+    return prefix + (digits ? String(parseInt(digits,10)).padStart(7,'0'):'');
   }
 
   function splitPolisa(input) {
     const formatted = normalizePolisa(input);
     const match = formatted.match(/^([A-Z]+)(\d{7})$/);
-    return match ? { series: match[1], number: match[2] } : { series: '', number: '' };
+    return match ? { series: match[1], number: match[2] } : { series:'', number:'' };
   }
 
   function copyPolisa() {
     const inputEl = document.getElementById('polisa');
     inputEl.value = normalizePolisa(inputEl.value);
     navigator.clipboard.writeText(inputEl.value);
+    checkVipPolisa();
   }
 
-  function copyToClipboard(id) {
-    const el = document.getElementById(id);
-    navigator.clipboard.writeText(el.value || el.innerText);
+  function copySeries() {
+    const inputEl = document.getElementById('polisa');
+    const { series } = splitPolisa(inputEl.value);
+    if(series) { inputEl.value = normalizePolisa(inputEl.value); navigator.clipboard.writeText(series); checkVipPolisa(); }
   }
 
-  function clearFields() {
-    ['polisa','imie','pesel','notatki'].forEach(id => document.getElementById(id).value = '');
+  function copyNumber() {
+    const inputEl = document.getElementById('polisa');
+    const { number } = splitPolisa(inputEl.value);
+    if(number) { inputEl.value = normalizePolisa(inputEl.value); navigator.clipboard.writeText(number); checkVipPolisa(); }
   }
 
-  function checkVipPolisa() {
-    const polisa = document.getElementById('polisa').value;
-    const vip = document.getElementById('vip-info');
-    if(vip) vip.style.display = vipPoliciesBase.includes(normalizePolisa(polisa)) ? 'block' : 'none';
-  }
+  function isVipPolisa(raw) { return vipPoliciesBase.includes(normalizePolisa(raw)); }
+  function checkVipPolisa() { const vip=document.getElementById('vip-info'); vip.style.display = isVipPolisa(document.getElementById('polisa').value)?'block':'none'; }
+  function copyToClipboard(id) { navigator.clipboard.writeText(document.getElementById(id).value || document.getElementById(id).innerText); }
+  function clearFields() { ['polisa','imie','nazwisko','pesel','zgloszenie','notatki'].forEach(id=>document.getElementById(id).value=''); checkVipPolisa(); }
 
   function appendToSummary() {
     const now = new Date().toLocaleString();
@@ -293,7 +310,7 @@ Kategoria: ${kat}
 Seria: ${series}
 Numer: ${number}
 Imię: ${document.getElementById('imie').value}
-Nazwisko: ${document.getElementById('imie').value}
+Nazwisko: ${document.getElementById('nazwisko').value}
 PESEL: ${document.getElementById('pesel').value}
 Notatki: ${document.getElementById('notatki').value}
 Weryfikacja: ${fields}
@@ -305,21 +322,20 @@ Weryfikacja: ${fields}
   function updateVerification() {
     const kat = document.getElementById("kategoria").value;
     const verifyBox = document.getElementById("verify-box");
-    verifyBox.innerHTML = "<h3>Weryfikacja danych:</h3>";
-    const fields = verificationMap[kat] || ["Seria i numer polisy", "Imię i nazwisko", "PESEL"];
-    fields.forEach(f => {
-      const label = document.createElement("label");
-      const cb = document.createElement("input");
-      cb.type = "checkbox";
-      cb.value = f;
+    verifyBox.innerHTML = "<strong>Weryfikacja danych:</strong>";
+    (verificationMap[kat] || ["Seria i numer polisy","Imię i nazwisko","PESEL"]).forEach(f=>{
+      const label=document.createElement("label");
+      const cb=document.createElement("input");
+      cb.type="checkbox";
+      cb.value=f;
       label.appendChild(cb);
-      label.appendChild(document.createTextNode(" " + f));
+      label.appendChild(document.createTextNode(" "+f));
       verifyBox.appendChild(label);
     });
   }
 
-  // inicjalne wygenerowanie
-  updateVerification();
+  updateVerification(); // inicjalizacja
 </script>
+
 </body>
 </html>
