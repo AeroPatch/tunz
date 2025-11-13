@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
       --white: #ffffff;
       --shadow: 0 8px 20px rgba(0,0,0,0.1);
       --gradient: linear-gradient(to right, #2d5c8a, #0a2540);
-      --info-bg: #e6f0ff;
+      --verify-bg: #dceeff;
     }
 
     * { box-sizing: border-box; }
@@ -21,10 +21,9 @@
       font-family: "Segoe UI", sans-serif;
       background: var(--bg);
       margin: 0;
-      padding: 30px;
+      padding: 20px;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
       color: var(--primary);
     }
 
@@ -33,7 +32,7 @@
       gap: 20px;
       width: 100%;
       max-width: 1200px;
-      flex-wrap: wrap;
+      min-height: 500px;
     }
 
     .left-panel, .right-panel {
@@ -41,22 +40,22 @@
       background: var(--white);
       border-radius: 15px;
       box-shadow: var(--shadow);
-      padding: 20px 25px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      min-width: 480px;
+      gap: 10px;
     }
 
     h2 {
       text-align: center;
-      margin: 0 0 20px;
+      margin: 0 0 10px 0;
     }
 
     .field-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .field-row label {
@@ -66,16 +65,16 @@
 
     input, textarea, select {
       flex: 1;
-      padding: 8px 10px;
+      padding: 6px 8px;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
       font-family: inherit;
     }
 
     textarea {
       resize: none;
-      height: 90px;
+      height: 80px;
     }
 
     .copy-btn {
@@ -89,14 +88,10 @@
       transition: 0.2s;
     }
 
-    .copy-btn:hover {
-      opacity: 0.9;
-    }
-
     .actions {
       display: flex;
       gap: 10px;
-      margin-top: 15px;
+      margin-top: 10px;
     }
 
     .actions button {
@@ -104,9 +99,9 @@
       background: var(--gradient);
       color: white;
       border: none;
-      padding: 10px;
+      padding: 8px;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       cursor: pointer;
       font-weight: 600;
       transition: 0.3s;
@@ -114,65 +109,39 @@
 
     #summary {
       flex: 1;
-      height: 320px;
+      height: 200px;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
       background: #f9f9f9;
       font-family: monospace;
       white-space: pre-wrap;
-    }
-
-    .summary-label-copy {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .clickable {
-      color: #2d5c8a;
-      text-decoration: underline;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    #vip-info {
-      color: red;
-      font-weight: bold;
-      text-align: center;
-      width: 100%;
-      margin-top: 8px;
+      font-size: 0.9rem;
     }
 
     .verify-box {
-      background: var(--info-bg);
-      border-radius: 10px;
-      padding: 10px 15px;
-      margin-top: 10px;
-      font-size: 0.95rem;
-    }
-
-    .verify-box h3 {
-      margin: 0 0 8px;
-      color: var(--secondary);
-      font-size: 1.05rem;
+      background: var(--verify-bg);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
     }
 
     .verify-box label {
-      display: block;
-      margin-bottom: 5px;
+      font-weight: normal;
     }
 
     footer {
       width: 100%;
       text-align: center;
-      padding: 12px 10px;
+      padding: 15px 10px;
       font-size: 0.9rem;
       color: var(--primary);
       border-top: 1px solid rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
       background: transparent;
-      margin-top: 25px;
     }
 
     footer a {
@@ -180,6 +149,7 @@
       font-weight: 600;
       text-decoration: none;
       margin-left: 6px;
+      transition: color 0.2s, text-decoration 0.2s;
     }
 
     footer a:hover {
@@ -189,216 +159,185 @@
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
+  <!-- LEWA STRONA -->
+  <div class="left-panel">
+    <h2>Notatka</h2>
 
-    <!-- 🔹 LEWA STRONA -->
-    <div class="left-panel">
-      <h2>Notatka</h2>
-
-      <div class="field-row" style="flex-direction: column; align-items: flex-start;">
-        <div style="display: flex; align-items: center; width: 100%; gap: 8px;">
-          <label>
-            <span class="clickable" onclick="copySeries()">Seria</span> i 
-            <span class="clickable" onclick="copyNumber()">numer</span> polisy:
-          </label>
-          <input type="text" id="polisa" oninput="checkVipPolisa()" style="flex: 1;">
-          <button class="copy-btn" onclick="copyPolisa()">Kopiuj</button>
-        </div>
-        <div id="vip-info" style="display:none;">To polisa VIP</div>
-      </div>
-
-      <div class="field-row">
-        <label for="imie">Imię:</label>
-        <input id="imie" type="text">
-        <button class="copy-btn" onclick="copyToClipboard('imie')">Kopiuj</button>
-      </div>
-
-      <div class="field-row">
-        <label for="nazwisko">Nazwisko:</label>
-        <input id="nazwisko" type="text">
-        <button class="copy-btn" onclick="copyToClipboard('nazwisko')">Kopiuj</button>
-      </div>
-
-      <div class="field-row">
-        <label for="pesel">PESEL:</label>
-        <input id="pesel" type="text">
-        <button class="copy-btn" onclick="copyToClipboard('pesel')">Kopiuj</button>
-      </div>
-
-      <div class="field-row">
-        <label for="zgloszenie">Numer zgłoszenia:</label>
-        <input id="zgloszenie" type="text">
-        <button class="copy-btn" onclick="copyToClipboard('zgloszenie')">Kopiuj</button>
-      </div>
-
-      <div class="field-row" style="align-items: flex-start;">
-        <label for="notatki">Pozostałe notatki:</label>
-        <textarea id="notatki"></textarea>
-        <button class="copy-btn" style="height: 90px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
-      </div>
-
-      <!-- 🔸 KATEGORIE -->
-      <div class="field-row">
-        <label for="kategoria">Typ sprawy:</label>
-        <select id="kategoria" onchange="updateVerification()">
-          <option value="">-- wybierz kategorię --</option>
-          <option value="wartosc">Wartość wykupu / stan konta</option>
-          <option value="warunki">Warunki umowy</option>
-          <option value="uposazony">Potwierdzenie uposażonego</option>
-          <option value="aktualizacja">Aktualizacja danych</option>
-          <option value="saldo">Saldo polisy</option>
-          <option value="modyfikacja">Modyfikacja warunków</option>
-          <option value="wznowienie">Wznowienie</option>
-          <option value="indeksacja">Indeksacja / waloryzacja</option>
-          <option value="cesja">Cesja</option>
-          <option value="rozwiazanie">Rozwiązanie</option>
-          <option value="bezskladkowosc">Bezskładkowość</option>
-          <option value="blankiety">Przesłanie kopii blankietów</option>
-          <option value="adres">Potwierdzenie adresu</option>
-          <option value="korespondencja">Data wysłania korespondencji TUnŻ</option>
-        </select>
-      </div>
-
-      <!-- 🔸 WERYFIKACJA -->
-      <div class="verify-box" id="verify-box">
-        <h3>Weryfikacja danych:</h3>
-        <label><input type="checkbox" value="Seria i numer polisy"> Seria i numer polisy</label>
-        <label><input type="checkbox" value="Imię i nazwisko"> Imię i nazwisko</label>
-        <label><input type="checkbox" value="PESEL"> PESEL</label>
-      </div>
-
-      <div class="actions">
-        <button onclick="clearFields()">Wyczyść notatkę</button>
-        <button onclick="appendToSummary()">Dodaj do notatki zbiorczej</button>
-      </div>
+    <div class="field-row">
+      <label>Seria i numer polisy:</label>
+      <input type="text" id="polisa" oninput="checkVipPolisa()">
+      <button class="copy-btn" onclick="copyPolisa()">Kopiuj</button>
     </div>
 
-    <!-- 🔹 PRAWA STRONA -->
-    <div class="right-panel">
-      <div class="summary-label-copy">
-        <h2>Zbiorcza notatka</h2>
-        <button class="copy-btn" onclick="copyToClipboard('summary')">Kopiuj całość</button>
-      </div>
-      <textarea id="summary" readonly></textarea>
+    <div class="field-row">
+      <label>Imię i nazwisko:</label>
+      <input type="text" id="imie">
+      <button class="copy-btn" onclick="copyToClipboard('imie')">Kopiuj</button>
     </div>
 
-    <!-- 🔹 STOPKA -->
-    <div style="width:100%;">
-      <footer>
-        © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
-        <a href="support.html">Wesprzyj projekt</a>
-      </footer>
+    <div class="field-row">
+      <label>PESEL:</label>
+      <input type="text" id="pesel">
+      <button class="copy-btn" onclick="copyToClipboard('pesel')">Kopiuj</button>
+    </div>
+
+    <div class="field-row">
+      <label for="kategoria">Kategoria telefonu:</label>
+      <select id="kategoria" onchange="updateVerification()">
+        <option value="wartosc">Wartość wykupu/stan konta</option>
+        <option value="warunki">Warunki umowy</option>
+        <option value="uposazony">Potwierdzenie uposażonego</option>
+        <option value="aktualizacja">Aktualizacja danych</option>
+        <option value="saldo">Saldo polisy</option>
+        <option value="modyfikacja">Modyfikacja warunków ubezpieczenia</option>
+        <option value="wznowienie">Wznowienie</option>
+        <option value="indeksacja">Indeksacja/waloryzacja</option>
+        <option value="cesja">Cesja</option>
+        <option value="rozwiazanie">Rozwiązanie</option>
+        <option value="bezskladkowosc">Bezskładkowość</option>
+        <option value="blankiety">Przesłanie kopii blankietów</option>
+        <option value="adres">Potwierdzenie adresu</option>
+        <option value="korespondencja">Data wysłania korespondencji TUnŻ</option>
+      </select>
+    </div>
+
+    <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+      <label>Pozostałe notatki:</label>
+      <textarea id="notatki"></textarea>
+      <button class="copy-btn" style="height: 80px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
+    </div>
+
+    <div class="actions">
+      <button onclick="clearFields()">Wyczyść notatkę</button>
+      <button onclick="appendToSummary()">Dodaj do notatki zbiorczej</button>
     </div>
   </div>
 
-  <script>
-    const vipPoliciesBase = [
-      "NG0014864","NG0037047","NG0028058","NG0043790","NG0043803",
-      "NG0043806","NG0043805","NG0028045","NG0038635","NG0032785",
-      "NK0010296","NG0024196","EP0008394","EP0008397","EP0008398",
-      "EP0008399","EP0008400","EP0008401","EP0008403","EP0008404",
-      "EP0008405","NG0024214","NG0029808","NG0029815","NG0029816",
-      "NG0030385","NG0030432","NG0030438","NG0030439","NG0030440",
-      "NG0030441","NG0030443","NG0030590","NG0030592"
-    ];
+  <!-- PRAWA STRONA -->
+  <div class="right-panel">
+    <div id="verify-box" class="verify-box">
+      <!-- checkboxy weryfikacyjne będą generowane dynamicznie -->
+    </div>
 
-    function normalizePolisa(input) {
-      if (!input) return "";
-      const cleaned = input.replace(/\s+/g, '').toUpperCase();
-      if (!/^[A-Z]{2}/.test(cleaned)) return cleaned;
-      const prefix = cleaned.match(/[A-Z]+/)?.[0] || '';
-      const digits = cleaned.match(/\d+/)?.[0] || '';
-      const normalizedNumber = digits ? String(parseInt(digits, 10)).padStart(7, '0') : '';
-      return prefix + normalizedNumber;
-    }
+    <h2>Zbiorcza notatka</h2>
+    <textarea id="summary" readonly></textarea>
+  </div>
+</div>
 
-    function splitPolisa(input) {
-      const formatted = normalizePolisa(input);
-      const match = formatted.match(/^([A-Z]+)(\d{7})$/);
-      return match ? { series: match[1], number: match[2] } : { series: '', number: '' };
-    }
+<footer>
+  © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
+  <a href="support.html">Wesprzyj projekt</a>
+</footer>
 
-    function copyPolisa() {
-      const inputEl = document.getElementById('polisa');
-      const formatted = normalizePolisa(inputEl.value);
-      inputEl.value = formatted;
-      navigator.clipboard.writeText(formatted);
-      checkVipPolisa();
-    }
+<script>
+  const vipPoliciesBase = ["NG0014864","NG0037047","NG0028058","NG0043790","NG0043803",
+  "NG0043806","NG0043805","NG0028045","NG0038635","NG0032785",
+  "NK0010296","NG0024196","EP0008394","EP0008397","EP0008398",
+  "EP0008399","EP0008400","EP0008401","EP0008403","EP0008404",
+  "EP0008405","NG0024214","NG0029808","NG0029815","NG0029816",
+  "NG0030385","NG0030432","NG0030438","NG0030439","NG0030440",
+  "NG0030441","NG0030443","NG0030590","NG0030592"];
 
-    function copySeries() {
-      const { series } = splitPolisa(document.getElementById('polisa').value);
-      if (series) navigator.clipboard.writeText(series);
-    }
+  const verificationMap = {
+    "wartosc": ["Seria i numer polisy", "Imię i nazwisko", "PESEL", "Dowód osobisty/adres/uposażony"],
+    "warunki": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "uposazony": ["Seria i numer polisy", "Imię i nazwisko", "PESEL", "Uposażony"],
+    "aktualizacja": ["Seria i numer polisy", "Imię i nazwisko", "PESEL", "Dowód osobisty/adres/uposażony"],
+    "saldo": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "modyfikacja": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "wznowienie": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "indeksacja": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "cesja": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "rozwiazanie": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "bezskladkowosc": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "blankiety": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
+    "adres": ["Seria i numer polisy", "Imię i nazwisko", "PESEL", "Dowód osobisty/adres/uposażony"],
+    "korespondencja": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"]
+  };
 
-    function copyNumber() {
-      const { number } = splitPolisa(document.getElementById('polisa').value);
-      if (number) navigator.clipboard.writeText(number);
-    }
+  function normalizePolisa(input) {
+    if (!input) return "";
+    const cleaned = input.replace(/\s+/g, '').toUpperCase();
+    if (!/^[A-Z]{2}/.test(cleaned)) return cleaned;
+    const prefix = cleaned.match(/[A-Z]+/)?.[0] || '';
+    const digits = cleaned.match(/\d+/)?.[0] || '';
+    const normalizedNumber = digits ? String(parseInt(digits, 10)).padStart(7, '0') : '';
+    return prefix + normalizedNumber;
+  }
 
-    function isVipPolisa(raw) {
-      return vipPoliciesBase.includes(normalizePolisa(raw));
-    }
+  function splitPolisa(input) {
+    const formatted = normalizePolisa(input);
+    const match = formatted.match(/^([A-Z]+)(\d{7})$/);
+    return match ? { series: match[1], number: match[2] } : { series: '', number: '' };
+  }
 
-    function checkVipPolisa() {
-      const vip = document.getElementById('vip-info');
-      vip.style.display = isVipPolisa(document.getElementById('polisa').value) ? 'block' : 'none';
-    }
+  function copyPolisa() {
+    const inputEl = document.getElementById('polisa');
+    inputEl.value = normalizePolisa(inputEl.value);
+    navigator.clipboard.writeText(inputEl.value);
+    checkVipPolisa();
+  }
 
-    function copyToClipboard(id) {
-      const el = document.getElementById(id);
-      navigator.clipboard.writeText(el.value || el.innerText);
-    }
+  function isVipPolisa(raw) {
+    return vipPoliciesBase.includes(normalizePolisa(raw));
+  }
 
-    function clearFields() {
-      ['polisa','imie','nazwisko','pesel','zgloszenie','notatki'].forEach(id => document.getElementById(id).value = '');
-      document.querySelectorAll('#verify-box input[type=checkbox]').forEach(cb => cb.checked = false);
-      document.getElementById('kategoria').value = "";
-      checkVipPolisa();
-    }
+  function checkVipPolisa() {
+    // opcjonalne oznaczenie VIP
+  }
 
-    function updateVerification() {
-      const kat = document.getElementById("kategoria").value;
-      const verifyBox = document.getElementById("verify-box");
-      let html = `
-        <h3>Weryfikacja danych:</h3>
-        <label><input type="checkbox" value="Seria i numer polisy"> Seria i numer polisy</label>
-        <label><input type="checkbox" value="Imię i nazwisko"> Imię i nazwisko</label>
-        <label><input type="checkbox" value="PESEL"> PESEL</label>
-      `;
-      if (kat === "wartosc" || kat === "aktualizacja") {
-        html += `<label><input type="checkbox" value="Dowód osobisty/adres/uposażony"> Dowód osobisty / adres / uposażony</label>`;
-      }
-      verifyBox.innerHTML = html;
-    }
+  function copyToClipboard(id) {
+    const el = document.getElementById(id);
+    navigator.clipboard.writeText(el.value || el.innerText);
+  }
 
-    function appendToSummary() {
-      const now = new Date().toLocaleString();
-      const polisa = normalizePolisa(document.getElementById('polisa').value);
-      const { series, number } = splitPolisa(polisa);
-      const kat = document.getElementById("kategoria");
-      const katText = kat.options[kat.selectedIndex]?.text || "Nie wybrano";
+  function clearFields() {
+    ['polisa','imie','pesel','notatki'].forEach(id => document.getElementById(id).value = '');
+  }
 
-      const verifyList = Array.from(document.querySelectorAll('#verify-box input:checked'))
-        .map(cb => cb.value)
-        .join(', ') || "brak";
+  function appendToSummary() {
+    const now = new Date().toLocaleString();
+    const polisa = normalizePolisa(document.getElementById('polisa').value);
+    const { series, number } = splitPolisa(polisa);
+    const kat = document.getElementById('kategoria').value;
 
-      const data = `[${now}]
-Kategoria: ${katText}
+    const fields = verificationMap[kat].join(', ');
+
+    const data = `[${now}]
+Kategoria: ${kat}
 Seria: ${series}
 Numer: ${number}
 Imię: ${document.getElementById('imie').value}
-Nazwisko: ${document.getElementById('nazwisko').value}
+Nazwisko: ${document.getElementById('imie').value}
 PESEL: ${document.getElementById('pesel').value}
-Zgłoszenie: ${document.getElementById('zgloszenie').value}
-Weryfikacja: ${verifyList}
 Notatki: ${document.getElementById('notatki').value}
---------------------------
-`;
+Weryfikacja: ${fields}
+--------------------------\n`;
 
-      const summary = document.getElementById('summary');
-      summary.value += data;
-    }
-  </script>
+    const summary = document.getElementById('summary');
+    summary.value += data;
+  }
+
+  function updateVerification() {
+    const kat = document.getElementById("kategoria").value;
+    const verifyBox = document.getElementById("verify-box");
+    verifyBox.innerHTML = "<h3>Weryfikacja danych:</h3>";
+
+    const fields = verificationMap[kat] || ["Seria i numer polisy", "Imię i nazwisko", "PESEL"];
+    fields.forEach(f => {
+      const label = document.createElement("label");
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.value = f;
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(" " + f));
+      verifyBox.appendChild(label);
+    });
+  }
+
+  // inicjalne wygenerowanie
+  updateVerification();
+</script>
 </body>
 </html>
