@@ -142,6 +142,30 @@
       width: 100%;
       margin-top: 8px;
     }
+    /* --- Stopka --- */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 0.9rem;
+  color: var(--primary);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+
+}
+
+footer a {
+  color: var(--secondary);
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 6px;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
   </style>
 </head>
 <body>
@@ -208,7 +232,10 @@
       </div>
       <textarea id="summary" readonly></textarea>
     </div>
-
+    <footer>
+    © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
+    <a href="support.html">Wesprzyj projekt</a>
+</footer>
   </div>
 
   <script>
