@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
       --white: #ffffff;
       --shadow: 0 8px 20px rgba(0,0,0,0.1);
       --gradient: linear-gradient(to right, #2d5c8a, #0a2540);
-      --highlight: #e8f3ff;
+      --info-bg: #e6f0ff;
     }
 
     * { box-sizing: border-box; }
@@ -33,28 +33,30 @@
       gap: 20px;
       width: 100%;
       max-width: 1200px;
+      flex-wrap: wrap;
     }
 
     .left-panel, .right-panel {
       flex: 1;
       background: var(--white);
-      border-radius: 12px;
+      border-radius: 15px;
       box-shadow: var(--shadow);
       padding: 20px 25px;
       display: flex;
       flex-direction: column;
+      min-width: 480px;
     }
 
     h2 {
       text-align: center;
-      margin: 10px 0 15px 0;
+      margin: 0 0 20px;
     }
 
     .field-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .field-row label {
@@ -73,7 +75,7 @@
 
     textarea {
       resize: none;
-      height: 100px;
+      height: 90px;
     }
 
     .copy-btn {
@@ -87,10 +89,14 @@
       transition: 0.2s;
     }
 
+    .copy-btn:hover {
+      opacity: 0.9;
+    }
+
     .actions {
       display: flex;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 15px;
     }
 
     .actions button {
@@ -108,7 +114,7 @@
 
     #summary {
       flex: 1;
-      height: 260px;
+      height: 320px;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -121,7 +127,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .clickable {
@@ -136,48 +142,37 @@
       font-weight: bold;
       text-align: center;
       width: 100%;
-      margin-top: 5px;
+      margin-top: 8px;
     }
 
-    /* Sekcja kategorii */
-    .category-select {
-      margin-top: 10px;
-    }
-
-    .category-select label {
-      font-weight: 600;
-    }
-
-    /* Błękitne pole weryfikacji */
-    .verification-box {
-      background: var(--highlight);
-      border: 1px solid #c6d9f5;
+    .verify-box {
+      background: var(--info-bg);
       border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 10px;
+      padding: 10px 15px;
+      margin-top: 10px;
+      font-size: 0.95rem;
     }
 
-    .verification-box h3 {
-      margin-top: 0;
-      font-size: 1.1rem;
-      text-align: center;
+    .verify-box h3 {
+      margin: 0 0 8px;
       color: var(--secondary);
+      font-size: 1.05rem;
     }
 
-    .verification-box label {
+    .verify-box label {
       display: block;
-      margin: 5px 0;
+      margin-bottom: 5px;
     }
 
     footer {
       width: 100%;
       text-align: center;
-      padding: 15px 10px;
+      padding: 12px 10px;
       font-size: 0.9rem;
       color: var(--primary);
       border-top: 1px solid rgba(0, 0, 0, 0.1);
       background: transparent;
-      margin-top: 20px;
+      margin-top: 25px;
     }
 
     footer a {
@@ -185,7 +180,6 @@
       font-weight: 600;
       text-decoration: none;
       margin-left: 6px;
-      transition: color 0.2s, text-decoration 0.2s;
     }
 
     footer a:hover {
@@ -196,6 +190,7 @@
 <body>
 
   <div class="container">
+
     <!-- 🔹 LEWA STRONA -->
     <div class="left-panel">
       <h2>Notatka</h2>
@@ -239,30 +234,37 @@
       <div class="field-row" style="align-items: flex-start;">
         <label for="notatki">Pozostałe notatki:</label>
         <textarea id="notatki"></textarea>
-        <button class="copy-btn" style="height: 100px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
+        <button class="copy-btn" style="height: 90px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
       </div>
 
-      <!-- ✅ Nowa sekcja kategorii -->
-      <div class="category-select">
+      <!-- 🔸 KATEGORIE -->
+      <div class="field-row">
         <label for="kategoria">Typ sprawy:</label>
-        <select id="kategoria">
-          <option value="">-- Wybierz kategorię --</option>
-          <option value="kat1">Kategoria 1</option>
-          <option value="kat2">Kategoria 2</option>
-          <option value="kat3">Kategoria 3</option>
-          <option value="kat4">Kategoria 4</option>
-          <option value="kat5">Kategoria 5</option>
-          <option value="kat6">Kategoria 6</option>
-          <option value="kat7">Kategoria 7</option>
-          <option value="kat8">Kategoria 8</option>
-          <option value="kat9">Kategoria 9</option>
-          <option value="kat10">Kategoria 10</option>
-          <option value="kat11">Kategoria 11</option>
-          <option value="kat12">Kategoria 12</option>
-          <option value="kat13">Kategoria 13</option>
-          <option value="kat14">Kategoria 14</option>
-          <option value="kat15">Kategoria 15</option>
+        <select id="kategoria" onchange="updateVerification()">
+          <option value="">-- wybierz kategorię --</option>
+          <option value="wartosc">Wartość wykupu / stan konta</option>
+          <option value="warunki">Warunki umowy</option>
+          <option value="uposazony">Potwierdzenie uposażonego</option>
+          <option value="aktualizacja">Aktualizacja danych</option>
+          <option value="saldo">Saldo polisy</option>
+          <option value="modyfikacja">Modyfikacja warunków</option>
+          <option value="wznowienie">Wznowienie</option>
+          <option value="indeksacja">Indeksacja / waloryzacja</option>
+          <option value="cesja">Cesja</option>
+          <option value="rozwiazanie">Rozwiązanie</option>
+          <option value="bezskladkowosc">Bezskładkowość</option>
+          <option value="blankiety">Przesłanie kopii blankietów</option>
+          <option value="adres">Potwierdzenie adresu</option>
+          <option value="korespondencja">Data wysłania korespondencji TUnŻ</option>
         </select>
+      </div>
+
+      <!-- 🔸 WERYFIKACJA -->
+      <div class="verify-box" id="verify-box">
+        <h3>Weryfikacja danych:</h3>
+        <label><input type="checkbox" value="Seria i numer polisy"> Seria i numer polisy</label>
+        <label><input type="checkbox" value="Imię i nazwisko"> Imię i nazwisko</label>
+        <label><input type="checkbox" value="PESEL"> PESEL</label>
       </div>
 
       <div class="actions">
@@ -273,27 +275,21 @@
 
     <!-- 🔹 PRAWA STRONA -->
     <div class="right-panel">
-      <!-- ✅ Błękitna sekcja weryfikacji -->
-      <div class="verification-box">
-        <h3>Weryfikacja</h3>
-        <label><input type="checkbox" id="ver1"> Punkt 1</label>
-        <label><input type="checkbox" id="ver2"> Punkt 2</label>
-        <label><input type="checkbox" id="ver3"> Punkt 3</label>
-        <label><input type="checkbox" id="ver4"> Punkt 4</label>
-      </div>
-
       <div class="summary-label-copy">
         <h2>Zbiorcza notatka</h2>
         <button class="copy-btn" onclick="copyToClipboard('summary')">Kopiuj całość</button>
       </div>
       <textarea id="summary" readonly></textarea>
     </div>
-  </div>
 
-  <footer>
-    © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
-    <a href="support.html">Wesprzyj projekt</a>
-  </footer>
+    <!-- 🔹 STOPKA -->
+    <div style="width:100%;">
+      <footer>
+        © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
+        <a href="support.html">Wesprzyj projekt</a>
+      </footer>
+    </div>
+  </div>
 
   <script>
     const vipPoliciesBase = [
@@ -331,23 +327,13 @@
     }
 
     function copySeries() {
-      const inputEl = document.getElementById('polisa');
-      const { series } = splitPolisa(inputEl.value);
-      if (series) {
-        inputEl.value = normalizePolisa(inputEl.value);
-        navigator.clipboard.writeText(series);
-        checkVipPolisa();
-      }
+      const { series } = splitPolisa(document.getElementById('polisa').value);
+      if (series) navigator.clipboard.writeText(series);
     }
 
     function copyNumber() {
-      const inputEl = document.getElementById('polisa');
-      const { number } = splitPolisa(inputEl.value);
-      if (number) {
-        inputEl.value = normalizePolisa(inputEl.value);
-        navigator.clipboard.writeText(number);
-        checkVipPolisa();
-      }
+      const { number } = splitPolisa(document.getElementById('polisa').value);
+      if (number) navigator.clipboard.writeText(number);
     }
 
     function isVipPolisa(raw) {
@@ -355,9 +341,8 @@
     }
 
     function checkVipPolisa() {
-      const polisa = document.getElementById('polisa').value;
       const vip = document.getElementById('vip-info');
-      vip.style.display = isVipPolisa(polisa) ? 'block' : 'none';
+      vip.style.display = isVipPolisa(document.getElementById('polisa').value) ? 'block' : 'none';
     }
 
     function copyToClipboard(id) {
@@ -366,42 +351,53 @@
     }
 
     function clearFields() {
-      ['polisa','imie','nazwisko','pesel','zgloszenie','notatki'].forEach(id => {
-        document.getElementById(id).value = '';
-      });
-      document.getElementById('kategoria').selectedIndex = 0;
-      ['ver1','ver2','ver3','ver4'].forEach(id => document.getElementById(id).checked = false);
+      ['polisa','imie','nazwisko','pesel','zgloszenie','notatki'].forEach(id => document.getElementById(id).value = '');
+      document.querySelectorAll('#verify-box input[type=checkbox]').forEach(cb => cb.checked = false);
+      document.getElementById('kategoria').value = "";
       checkVipPolisa();
+    }
+
+    function updateVerification() {
+      const kat = document.getElementById("kategoria").value;
+      const verifyBox = document.getElementById("verify-box");
+      let html = `
+        <h3>Weryfikacja danych:</h3>
+        <label><input type="checkbox" value="Seria i numer polisy"> Seria i numer polisy</label>
+        <label><input type="checkbox" value="Imię i nazwisko"> Imię i nazwisko</label>
+        <label><input type="checkbox" value="PESEL"> PESEL</label>
+      `;
+      if (kat === "wartosc" || kat === "aktualizacja") {
+        html += `<label><input type="checkbox" value="Dowód osobisty/adres/uposażony"> Dowód osobisty / adres / uposażony</label>`;
+      }
+      verifyBox.innerHTML = html;
     }
 
     function appendToSummary() {
       const now = new Date().toLocaleString();
       const polisa = normalizePolisa(document.getElementById('polisa').value);
-      const isVip = isVipPolisa(polisa);
       const { series, number } = splitPolisa(polisa);
-      const kategoria = document.getElementById('kategoria').value || 'Brak kategorii';
+      const kat = document.getElementById("kategoria");
+      const katText = kat.options[kat.selectedIndex]?.text || "Nie wybrano";
 
-      const checks = [];
-      for (let i = 1; i <= 4; i++) {
-        const el = document.getElementById('ver' + i);
-        if (el.checked) checks.push('Punkt ' + i);
-      }
+      const verifyList = Array.from(document.querySelectorAll('#verify-box input:checked'))
+        .map(cb => cb.value)
+        .join(', ') || "brak";
 
       const data = `[${now}]
+Kategoria: ${katText}
 Seria: ${series}
 Numer: ${number}
-VIP: ${isVip ? "TAK" : "NIE"}
 Imię: ${document.getElementById('imie').value}
 Nazwisko: ${document.getElementById('nazwisko').value}
 PESEL: ${document.getElementById('pesel').value}
 Zgłoszenie: ${document.getElementById('zgloszenie').value}
-Kategoria: ${kategoria}
-Zweryfikowano: ${checks.join(', ') || 'brak'}
+Weryfikacja: ${verifyList}
 Notatki: ${document.getElementById('notatki').value}
 --------------------------
 `;
 
-      document.getElementById('summary').value += data;
+      const summary = document.getElementById('summary');
+      summary.value += data;
     }
   </script>
 </body>
