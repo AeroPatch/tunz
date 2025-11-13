@@ -199,7 +199,7 @@
         <option value="kat1">Wartość wykupu/stan konta</option>
         <option value="kat2">Warunki umowy</option>
         <option value="kat3">Potwierdzenie uposażonego</option>
-        <option value="kat4">Aktualizacja danych</option>
+        <option value="kat4">Aktualizacja danych np. tel, email, adres, DO</option>
         <option value="kat5">Saldo polisy</option>
         <option value="kat6">Modyfikacja warunków ubezpieczenia</option>
         <option value="kat7">Wznowienie</option>
@@ -207,9 +207,14 @@
         <option value="kat9">Cesja</option>
         <option value="kat10">Rozwiązanie</option>
         <option value="kat11">Bezskładkowość</option>
-        <option value="kat12">Przesłanie kopii blankietów</option>
+        <option value="kat12">Przesłanie kopii blankietów/korespondencji rocznicowej</option>
         <option value="kat13">Potwierdzenie adresu</option>
         <option value="kat14">Data wysłania korespondencji TUnŻ</option>
+        <option value="kat15">Posrednik - obsługujący ubezpieczenie</option>
+        <option value="kat16">Regionalny Koordyrator Sprzedaży</option>
+        <option value="kat17">Asystent oddziału</option>
+        <option value="kat18">OO umowy grupowe w zakładzie pracy</option>
+        <option value="kat19">Broker</option>
       </select>
     </div>
 
@@ -244,20 +249,27 @@
   ];
 
   const verificationMap = {
-    "kat1": ["Seria i numer polisy","Imię i nazwisko","PESEL","Dowód osobisty/adres/uposażony"],
-    "kat2": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat3": ["Seria i numer polisy","Imię i nazwisko","PESEL","Uposażony"],
-    "kat4": ["Seria i numer polisy","Imię i nazwisko","PESEL","Dowód osobisty/adres/uposażony"],
-    "kat5": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat6": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat7": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat8": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat9": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat10":["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat11":["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat12":["Seria i numer polisy","Imię i nazwisko","PESEL"],
-    "kat13":["Seria i numer polisy","Imię i nazwisko","PESEL","Dowód osobisty/adres/uposażony"],
-    "kat14":["Seria i numer polisy","Imię i nazwisko","PESEL"]
+    "kat1": ["Seria i numer polisy*","Imię i nazwisko","PESEL","Dowód osobisty/adres/uposażony"],
+    "kat2": ["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat3": ["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat4": ["Seria i numer polisy*","Imię i nazwisko","PESEL","Dowód osobisty/adres/uposażony"],
+    "kat5": ["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat6": ["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat7": ["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat8": ["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat9": ["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat10":["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat11":["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat12":["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat13":["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+    "kat14":["Seria i numer polisy*","Imię i nazwisko","PESEL"],
+        "kat15":["Seria i numer polisy","Imię i nazwisko rozmówcy","PESEL/nr ewidencyjny"],
+           "kat16":["Seria i numer polisy","Imię i nazwisko rozmówcy","PESEL/nr ewidencyjny"],
+  "kat17":["Seria i numer polisy","Imię i nazwisko rozmówcy","PESEL/nr ewidencyjny"],
+    "kat18":["Seria i numer polisy","Imię i nazwisko rozmówcy","PESEL/login AZ", "Imię i nazwisko ubezpieczonego*"],
+            
+    "kat19":["Seria i numer polisy","Imię i nazwisko rozmówcy","Nr ewidencyjny*"],
+  
   };
 
   function normalizePolisa(input) {
