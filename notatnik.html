@@ -1,147 +1,149 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8" />
-<title>Notatnik - CloudPatch</title>
-<link rel="icon" type="image/png" href="notatnik.png">
-<style>
-  :root {
-    --bg: #f3f9ff;
-    --primary: #0a2540;
-    --secondary: #2d5c8a;
-    --white: #ffffff;
-    --shadow: 0 8px 20px rgba(0,0,0,0.1);
-    --gradient: linear-gradient(to right, #2d5c8a, #0a2540);
-    --verify-bg: #dceeff;
-  }
+  <meta charset="UTF-8" />
+  <title>Notatnik - CloudPatch</title>
+  <link rel="icon" type="image/png" href="notatnik.png">
+  <style>
+    :root {
+      --bg: #f3f9ff;
+      --primary: #0a2540;
+      --secondary: #2d5c8a;
+      --white: #ffffff;
+      --shadow: 0 8px 20px rgba(0,0,0,0.1);
+      --gradient: linear-gradient(to right, #2d5c8a, #0a2540);
+      --verify-bg: #dceeff;
+    }
 
-  * { box-sizing: border-box; }
+    * { box-sizing: border-box; }
 
-  body {
-    font-family: "Segoe UI", sans-serif;
-    background: var(--bg);
-    margin: 0;
-    padding: 20px;
-    color: var(--primary);
-  }
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: var(--bg);
+      margin: 0;
+      padding: 20px;
+      color: var(--primary);
+    }
 
-  .container {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-    max-width: 1200px;
-    min-height: 500px;
-  }
+    .container {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+      min-height: 500px;
+      align-items: flex-start;
+    }
 
-  .left-panel, .right-panel {
-    flex: 1;
-    background: var(--white);
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+    .left-panel, .right-panel {
+      flex: 1;
+      background: var(--white);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-  h2 {
-    text-align: center;
-    margin: 0 0 10px 0;
-  }
+    h2 {
+      text-align: center;
+      margin: 0 0 10px 0;
+    }
 
-  .field-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
+    .field-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
 
-  .field-row label {
-    font-weight: 600;
-    min-width: 160px;
-  }
+    .field-row label {
+      font-weight: 600;
+      min-width: 160px;
+    }
 
-  input, textarea, select {
-    flex: 1;
-    padding: 6px 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-family: inherit;
-  }
+    input, textarea, select {
+      flex: 1;
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
 
-  textarea { resize: none; height: 80px; }
+    textarea { resize: none; height: 80px; }
 
-  .copy-btn {
-    background: var(--gradient);
-    color: #fff;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.2s;
-  }
+    .copy-btn {
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
 
-  .actions { display: flex; gap: 10px; margin-top: 10px; }
+    .actions { display: flex; gap: 10px; margin-top: 10px; }
 
-  .actions button {
-    flex: 1;
-    background: var(--gradient);
-    color: white;
-    border: none;
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-  }
+    .actions button {
+      flex: 1;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s;
+    }
 
-  #summary {
-    flex: 1;
-    height: 200px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #f9f9f9;
-    font-family: monospace;
-    white-space: pre-wrap;
-    font-size: 0.9rem;
-  }
+    #summary {
+      flex: 1;
+      height: 200px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #f9f9f9;
+      font-family: monospace;
+      white-space: pre-wrap;
+      font-size: 0.9rem;
+    }
 
-  .verify-box {
-    background: var(--verify-bg);
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 0.9rem;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
+    .verify-box {
+      background: var(--verify-bg);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
 
-  .verify-box label { font-weight: normal; }
+    .verify-box label { font-weight: normal; }
 
-  .footer-container {
-    width: 100%;
-    text-align: center;
-    padding: 15px 10px;
-    font-size: 0.9rem;
-    color: var(--primary);
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
+    .footer-container {
+      width: 100%;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      color: var(--primary);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
 
-  .footer-container a {
-    color: var(--secondary);
-    font-weight: 600;
-    text-decoration: none;
-    margin-left: 6px;
-    transition: color 0.2s, text-decoration 0.2s;
-  }
+    .footer-container a {
+      color: var(--secondary);
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 6px;
+      transition: color 0.2s, text-decoration 0.2s;
+    }
 
-  .footer-container a:hover { text-decoration: underline; }
-</style>
+    .footer-container a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
 
@@ -168,6 +170,12 @@
       <button class="copy-btn" onclick="copyToClipboard('pesel')">Kopiuj</button>
     </div>
 
+    <div class="field-row" style="flex-direction: column; align-items: flex-start;">
+      <label>Pozostałe notatki:</label>
+      <textarea id="notatki"></textarea>
+      <button class="copy-btn" style="height: 80px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
+    </div>
+
     <div class="field-row">
       <label for="kategoria">Kategoria telefonu:</label>
       <select id="kategoria" onchange="updateVerification()">
@@ -188,12 +196,6 @@
       </select>
     </div>
 
-    <div class="field-row" style="flex-direction: column; align-items: flex-start;">
-      <label>Pozostałe notatki:</label>
-      <textarea id="notatki"></textarea>
-      <button class="copy-btn" style="height: 80px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
-    </div>
-
     <div class="actions">
       <button onclick="clearFields()">Wyczyść notatkę</button>
       <button onclick="appendToSummary()">Dodaj do notatki zbiorczej</button>
@@ -208,28 +210,38 @@
   </div>
 </div>
 
-<!-- Stopka w osobnym div -->
+<!-- Stopka -->
 <div class="footer-container">
   © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
   <a href="support.html">Wesprzyj projekt</a>
 </div>
 
 <script>
+  const vipPoliciesBase = [
+    "NG0014864","NG0037047","NG0028058","NG0043790","NG0043803",
+    "NG0043806","NG0043805","NG0028045","NG0038635","NG0032785",
+    "NK0010296","NG0024196","EP0008394","EP0008397","EP0008398",
+    "EP0008399","EP0008400","EP0008401","EP0008403","EP0008404",
+    "EP0008405","NG0024214","NG0029808","NG0029815","NG0029816",
+    "NG0030385","NG0030432","NG0030438","NG0030439","NG0030440",
+    "NG0030441","NG0030443","NG0030590","NG0030592"
+  ];
+
   const verificationMap = {
-    "kat1": ["Seria i numer polisy", "Imię i nazwisko", "PESEL", "Dowód osobisty/adres/uposażony"],
-    "kat2": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat3": ["Seria i numer polisy", "Imię i nazwisko", "PESEL", "Uposażony"],
-    "kat4": ["Seria i numer polisy", "Imię i nazwisko", "PESEL", "Dowód osobisty/adres/uposażony"],
-    "kat5": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat6": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat7": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat8": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat9": ["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat10":["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat11":["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat12":["Seria i numer polisy", "Imię i nazwisko", "PESEL"],
-    "kat13":["Seria i numer polisy", "Imię i nazwisko", "PESEL", "Dowód osobisty/adres/uposażony"],
-    "kat14":["Seria i numer polisy", "Imię i nazwisko", "PESEL"]
+    "kat1": ["Seria i numer polisy","Imię i nazwisko","PESEL","Dowód osobisty/adres/uposażony"],
+    "kat2": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat3": ["Seria i numer polisy","Imię i nazwisko","PESEL","Uposażony"],
+    "kat4": ["Seria i numer polisy","Imię i nazwisko","PESEL","Dowód osobisty/adres/uposażony"],
+    "kat5": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat6": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat7": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat8": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat9": ["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat10":["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat11":["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat12":["Seria i numer polisy","Imię i nazwisko","PESEL"],
+    "kat13":["Seria i numer polisy","Imię i nazwisko","PESEL","Dowód osobisty/adres/uposażony"],
+    "kat14":["Seria i numer polisy","Imię i nazwisko","PESEL"]
   };
 
   function normalizePolisa(input) {
@@ -263,6 +275,12 @@
     ['polisa','imie','pesel','notatki'].forEach(id => document.getElementById(id).value = '');
   }
 
+  function checkVipPolisa() {
+    const polisa = document.getElementById('polisa').value;
+    const vip = document.getElementById('vip-info');
+    if(vip) vip.style.display = vipPoliciesBase.includes(normalizePolisa(polisa)) ? 'block' : 'none';
+  }
+
   function appendToSummary() {
     const now = new Date().toLocaleString();
     const polisa = normalizePolisa(document.getElementById('polisa').value);
@@ -288,7 +306,6 @@ Weryfikacja: ${fields}
     const kat = document.getElementById("kategoria").value;
     const verifyBox = document.getElementById("verify-box");
     verifyBox.innerHTML = "<h3>Weryfikacja danych:</h3>";
-
     const fields = verificationMap[kat] || ["Seria i numer polisy", "Imię i nazwisko", "PESEL"];
     fields.forEach(f => {
       const label = document.createElement("label");
