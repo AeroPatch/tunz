@@ -319,14 +319,12 @@
     const fields = verificationMap[kat].join(', ');
 
     const data = `[${now}]
-Kategoria: ${kat}
 Seria: ${series}
 Numer: ${number}
 Imię: ${document.getElementById('imie').value}
 Nazwisko: ${document.getElementById('nazwisko').value}
 PESEL: ${document.getElementById('pesel').value}
 Notatki: ${document.getElementById('notatki').value}
-Weryfikacja: ${fields}
 --------------------------\n`;
 
     document.getElementById('summary').value += data;
