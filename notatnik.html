@@ -32,6 +32,8 @@
       gap: 30px;
       width: 100%;
       max-width: 1200px;
+      position: relative; /* konieczne dla absolutnego pozycjonowania dziecka */
+      min-height: 400px; /* ustaw minimalną wysokość, żeby działało przyklejanie */
     }
 
     .left-panel, .right-panel {
@@ -165,7 +167,13 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
-
+.sticky-bottom {
+  position: absolute;
+  bottom: 0; /* przykleja do dołu container */
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px; /* opcjonalnie margines od dołu */
+}
   </style>
 </head>
 <body>
@@ -233,7 +241,7 @@ footer a:hover {
       <textarea id="summary" readonly></textarea>
     </div>
   </div>
-  <div class="container">
+  <div class="sticky-bottom">
       <footer>
     © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
     <a href="support.html">Wesprzyj projekt</a>
