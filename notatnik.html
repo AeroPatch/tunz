@@ -12,6 +12,7 @@
       --white: #ffffff;
       --shadow: 0 8px 20px rgba(0,0,0,0.1);
       --gradient: linear-gradient(to right, #2d5c8a, #0a2540);
+      --highlight: #e8f3ff;
     }
 
     * { box-sizing: border-box; }
@@ -20,7 +21,7 @@
       font-family: "Segoe UI", sans-serif;
       background: var(--bg);
       margin: 0;
-      padding: 40px;
+      padding: 30px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -29,34 +30,31 @@
 
     .container {
       display: flex;
-      gap: 30px;
+      gap: 20px;
       width: 100%;
       max-width: 1200px;
-      position: relative; /* konieczne dla absolutnego pozycjonowania dziecka */
-      min-height: 400px; /* ustaw minimalną wysokość, żeby działało przyklejanie */
     }
 
     .left-panel, .right-panel {
       flex: 1;
       background: var(--white);
-      border-radius: 15px;
+      border-radius: 12px;
       box-shadow: var(--shadow);
-      padding: 25px 30px;
+      padding: 20px 25px;
       display: flex;
       flex-direction: column;
     }
 
     h2 {
       text-align: center;
-      margin-top: 0;
-      margin-bottom: 25px;
+      margin: 10px 0 15px 0;
     }
 
     .field-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 15px;
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
     .field-row label {
@@ -64,7 +62,7 @@
       min-width: 160px;
     }
 
-    input, textarea {
+    input, textarea, select {
       flex: 1;
       padding: 8px 10px;
       border: 1px solid #ccc;
@@ -75,7 +73,7 @@
 
     textarea {
       resize: none;
-      height: 120px;
+      height: 100px;
     }
 
     .copy-btn {
@@ -92,7 +90,7 @@
     .actions {
       display: flex;
       gap: 10px;
-      margin-top: 15px;
+      margin-top: 10px;
     }
 
     .actions button {
@@ -110,7 +108,7 @@
 
     #summary {
       flex: 1;
-      height: 360px;
+      height: 260px;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -123,7 +121,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .clickable {
@@ -133,53 +131,71 @@
       font-weight: 600;
     }
 
-    .clickable:hover {
-      text-decoration: none;
-    }
-
     #vip-info {
       color: red;
       font-weight: bold;
       text-align: center;
       width: 100%;
-      margin-top: 8px;
+      margin-top: 5px;
     }
-    /* --- Stopka --- */
-footer {
-  width: 100%;
-  text-align: center;
-  padding: 15px 10px;
-  font-size: 0.9rem;
-  color: var(--primary);
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  background: transparent;
-  margin-top: 40px;
-}
 
-footer a {
-  color: var(--secondary);
-  font-weight: 600;
-  text-decoration: none;
-  margin-left: 6px;
-  transition: color 0.2s, text-decoration 0.2s;
-}
+    /* Sekcja kategorii */
+    .category-select {
+      margin-top: 10px;
+    }
 
-footer a:hover {
-  text-decoration: underline;
-}
-.sticky-bottom {
-  position: absolute;
-  bottom: 0; /* przykleja do dołu container */
-  width: 100%;
-  text-align: center;
-  padding-bottom: 10px; /* opcjonalnie margines od dołu */
-}
+    .category-select label {
+      font-weight: 600;
+    }
+
+    /* Błękitne pole weryfikacji */
+    .verification-box {
+      background: var(--highlight);
+      border: 1px solid #c6d9f5;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .verification-box h3 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      text-align: center;
+      color: var(--secondary);
+    }
+
+    .verification-box label {
+      display: block;
+      margin: 5px 0;
+    }
+
+    footer {
+      width: 100%;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 0.9rem;
+      color: var(--primary);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      background: transparent;
+      margin-top: 20px;
+    }
+
+    footer a {
+      color: var(--secondary);
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 6px;
+      transition: color 0.2s, text-decoration 0.2s;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-
     <!-- 🔹 LEWA STRONA -->
     <div class="left-panel">
       <h2>Notatka</h2>
@@ -223,7 +239,30 @@ footer a:hover {
       <div class="field-row" style="align-items: flex-start;">
         <label for="notatki">Pozostałe notatki:</label>
         <textarea id="notatki"></textarea>
-        <button class="copy-btn" style="height: 120px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
+        <button class="copy-btn" style="height: 100px;" onclick="copyToClipboard('notatki')">Kopiuj</button>
+      </div>
+
+      <!-- ✅ Nowa sekcja kategorii -->
+      <div class="category-select">
+        <label for="kategoria">Typ sprawy:</label>
+        <select id="kategoria">
+          <option value="">-- Wybierz kategorię --</option>
+          <option value="kat1">Kategoria 1</option>
+          <option value="kat2">Kategoria 2</option>
+          <option value="kat3">Kategoria 3</option>
+          <option value="kat4">Kategoria 4</option>
+          <option value="kat5">Kategoria 5</option>
+          <option value="kat6">Kategoria 6</option>
+          <option value="kat7">Kategoria 7</option>
+          <option value="kat8">Kategoria 8</option>
+          <option value="kat9">Kategoria 9</option>
+          <option value="kat10">Kategoria 10</option>
+          <option value="kat11">Kategoria 11</option>
+          <option value="kat12">Kategoria 12</option>
+          <option value="kat13">Kategoria 13</option>
+          <option value="kat14">Kategoria 14</option>
+          <option value="kat15">Kategoria 15</option>
+        </select>
       </div>
 
       <div class="actions">
@@ -234,6 +273,15 @@ footer a:hover {
 
     <!-- 🔹 PRAWA STRONA -->
     <div class="right-panel">
+      <!-- ✅ Błękitna sekcja weryfikacji -->
+      <div class="verification-box">
+        <h3>Weryfikacja</h3>
+        <label><input type="checkbox" id="ver1"> Punkt 1</label>
+        <label><input type="checkbox" id="ver2"> Punkt 2</label>
+        <label><input type="checkbox" id="ver3"> Punkt 3</label>
+        <label><input type="checkbox" id="ver4"> Punkt 4</label>
+      </div>
+
       <div class="summary-label-copy">
         <h2>Zbiorcza notatka</h2>
         <button class="copy-btn" onclick="copyToClipboard('summary')">Kopiuj całość</button>
@@ -241,12 +289,11 @@ footer a:hover {
       <textarea id="summary" readonly></textarea>
     </div>
   </div>
-  <div class="sticky-bottom">
-      <footer>
+
+  <footer>
     © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
     <a href="support.html">Wesprzyj projekt</a>
-</footer>
-  </div>
+  </footer>
 
   <script>
     const vipPoliciesBase = [
@@ -259,16 +306,10 @@ footer a:hover {
       "NG0030441","NG0030443","NG0030590","NG0030592"
     ];
 
-    // 🌟 NOWA FUNKCJA normalizePolisa
     function normalizePolisa(input) {
       if (!input) return "";
       const cleaned = input.replace(/\s+/g, '').toUpperCase();
-      
-      // jeśli pierwsze 2 znaki nie są literami, zostaw bez zmian
-      if (!/^[A-Z]{2}/.test(cleaned)) {
-        return cleaned;
-      }
-
+      if (!/^[A-Z]{2}/.test(cleaned)) return cleaned;
       const prefix = cleaned.match(/[A-Z]+/)?.[0] || '';
       const digits = cleaned.match(/\d+/)?.[0] || '';
       const normalizedNumber = digits ? String(parseInt(digits, 10)).padStart(7, '0') : '';
@@ -293,8 +334,7 @@ footer a:hover {
       const inputEl = document.getElementById('polisa');
       const { series } = splitPolisa(inputEl.value);
       if (series) {
-        const formatted = normalizePolisa(inputEl.value);
-        inputEl.value = formatted;
+        inputEl.value = normalizePolisa(inputEl.value);
         navigator.clipboard.writeText(series);
         checkVipPolisa();
       }
@@ -304,8 +344,7 @@ footer a:hover {
       const inputEl = document.getElementById('polisa');
       const { number } = splitPolisa(inputEl.value);
       if (number) {
-        const formatted = normalizePolisa(inputEl.value);
-        inputEl.value = formatted;
+        inputEl.value = normalizePolisa(inputEl.value);
         navigator.clipboard.writeText(number);
         checkVipPolisa();
       }
@@ -330,6 +369,8 @@ footer a:hover {
       ['polisa','imie','nazwisko','pesel','zgloszenie','notatki'].forEach(id => {
         document.getElementById(id).value = '';
       });
+      document.getElementById('kategoria').selectedIndex = 0;
+      ['ver1','ver2','ver3','ver4'].forEach(id => document.getElementById(id).checked = false);
       checkVipPolisa();
     }
 
@@ -338,6 +379,13 @@ footer a:hover {
       const polisa = normalizePolisa(document.getElementById('polisa').value);
       const isVip = isVipPolisa(polisa);
       const { series, number } = splitPolisa(polisa);
+      const kategoria = document.getElementById('kategoria').value || 'Brak kategorii';
+
+      const checks = [];
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById('ver' + i);
+        if (el.checked) checks.push('Punkt ' + i);
+      }
 
       const data = `[${now}]
 Seria: ${series}
@@ -347,12 +395,13 @@ Imię: ${document.getElementById('imie').value}
 Nazwisko: ${document.getElementById('nazwisko').value}
 PESEL: ${document.getElementById('pesel').value}
 Zgłoszenie: ${document.getElementById('zgloszenie').value}
+Kategoria: ${kategoria}
+Zweryfikowano: ${checks.join(', ') || 'brak'}
 Notatki: ${document.getElementById('notatki').value}
 --------------------------
 `;
 
-      const summary = document.getElementById('summary');
-      summary.value += data;
+      document.getElementById('summary').value += data;
     }
   </script>
 </body>
