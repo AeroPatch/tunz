@@ -79,6 +79,28 @@
       min-height: 200px;
       overflow-y: auto;
     }
+    /* --- Stopka --- */
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 0.9rem;
+  color: var(--primary);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+}
+
+footer a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 6px;
+  transition: color 0.2s, text-decoration 0.2s;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
   </style>
 </head>
 <body>
@@ -91,6 +113,10 @@
     <button onclick="literujEmail()">Literuj</button>
 
     <div class="result" id="result"></div>
+        <footer>
+    © 2025 CloudPatch. Wszelkie prawa zastrzeżone.
+    <a href="support.html">Wesprzyj projekt</a>
+</footer>
   </div>
 
   <script>
